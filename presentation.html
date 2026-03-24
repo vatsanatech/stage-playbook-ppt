@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAGE Playbook + GSTACK</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --text: #ffffff;
+    --text-muted: #a1a1aa;
+    --accent: #6366f1;
+    --accent2: #8b5cf6;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  .slide-inner {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 60px;
+    z-index: 2;
+    position: relative;
+  }
+
+  /* Full-bleed background images */
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .slide-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Dark overlay variants */
+  .overlay-dark .slide-bg::after {
+    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(10,10,30,0.8) 50%, rgba(0,0,0,0.85) 100%);
+  }
+
+  .overlay-danger .slide-bg::after {
+    background: linear-gradient(135deg, rgba(30,0,0,0.88) 0%, rgba(40,5,5,0.82) 50%, rgba(20,0,0,0.88) 100%);
+  }
+
+  .overlay-success .slide-bg::after {
+    background: linear-gradient(135deg, rgba(0,20,10,0.88) 0%, rgba(0,30,20,0.82) 50%, rgba(0,15,10,0.88) 100%);
+  }
+
+  .overlay-purple .slide-bg::after {
+    background: linear-gradient(135deg, rgba(15,0,30,0.88) 0%, rgba(20,5,40,0.82) 50%, rgba(10,0,25,0.88) 100%);
+  }
+
+  .overlay-blue .slide-bg::after {
+    background: linear-gradient(135deg, rgba(0,5,20,0.88) 0%, rgba(5,10,35,0.82) 50%, rgba(0,5,15,0.88) 100%);
+  }
+
+  /* Subtle mesh on top of image */
+  .bg-mesh {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(99, 102, 241, 0.08), transparent),
+      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(139, 92, 246, 0.06), transparent);
+    pointer-events: none;
+  }
+
+  /* Grid overlay */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 24px;
+    right: 36px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+    font-variant-numeric: tabular-nums;
+    z-index: 3;
+  }
+
+  /* Photo credit */
+  .photo-credit {
+    position: absolute;
+    bottom: 24px;
+    left: 36px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.15);
+    z-index: 3;
+  }
+
+  /* Typography */
+  .hero-title {
+    font-size: 76px;
+    font-weight: 900;
+    letter-spacing: -3px;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 22px;
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .big-emoji {
+    font-size: 80px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 0 30px rgba(99,102,241,0.3));
+  }
+
+  .mega-number {
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -4px;
+  }
+
+  /* Cards */
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .glass-sm {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 18px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* Incident cards */
+  .incident {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .incident::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+  }
+
+  .incident .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+  .incident h4 { font-size: 16px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+  .incident p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .incident .number {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--red);
+    letter-spacing: -1px;
+  }
+
+  /* Fix cards */
+  .fix-card {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .fix-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+  }
+
+  .fix-card .icon { font-size: 36px; margin-bottom: 10px; display: block; }
+  .fix-card h4 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .fix-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Milestone cards */
+  .milestone {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .milestone::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .milestone .icon { font-size: 40px; margin-bottom: 10px; display: block; }
+  .milestone h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .milestone p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Layout helpers */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .flex { display: flex; gap: 16px; }
+  .flex-center { align-items: center; justify-content: center; }
+  .text-center { text-align: center; }
+
+  /* Tags */
+  .pill {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 3px;
+  }
+
+  .pill-accent { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); }
+  .pill-green { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+  .pill-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+  .pill-yellow { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.3); }
+  .pill-cyan { background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+  /* Terminal */
+  .terminal {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .terminal .prompt { color: var(--cyan); }
+  .terminal .comment { color: #52525b; }
+  .terminal .success { color: var(--green); }
+  .terminal .highlight { color: var(--yellow); }
+
+  /* Flow arrows */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .flow-chip {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .flow-arr { color: rgba(255,255,255,0.2); font-size: 20px; }
+
+  /* Project list */
+  .proj {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .proj .emoji { font-size: 28px; }
+  .proj .name { font-weight: 700; font-size: 17px; min-width: 170px; }
+  .proj .desc { color: var(--text-muted); font-size: 14px; }
+
+  /* Stat card */
+  .stat-card {
+    text-align: center;
+    padding: 24px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  .stat-card .num {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-card .label { font-size: 14px; color: var(--text-muted); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes bgZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
+
+  .slide.active .slide-bg {
+    animation: bgZoom 20s ease-out forwards;
+  }
+
+  .slide.active .slide-inner > * {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .slide.active .slide-inner > *:nth-child(1) { animation-delay: 0s; }
+  .slide.active .slide-inner > *:nth-child(2) { animation-delay: 0.1s; }
+  .slide.active .slide-inner > *:nth-child(3) { animation-delay: 0.2s; }
+  .slide.active .slide-inner > *:nth-child(4) { animation-delay: 0.3s; }
+  .slide.active .slide-inner > *:nth-child(5) { animation-delay: 0.4s; }
+
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+  .float { animation: float 3s ease-in-out infinite; }
+
+  /* Glow effects */
+  .glow-green { text-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
+  .glow-red { text-shadow: 0 0 40px rgba(239, 68, 68, 0.4); }
+  .glow-accent { text-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-green {
+    background: linear-gradient(135deg, #10b981, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-red {
+    background: linear-gradient(135deg, #ef4444, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Quote */
+  .quote-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 24px;
+    margin-top: 16px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .quote-box p {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--pink));
+    transition: width 0.4s ease;
+    z-index: 10;
+  }
+
+  /* Print styles */
+  @media print {
+    body { overflow: visible; }
+    .slide {
+      display: flex !important;
+      page-break-after: always;
+      page-break-inside: avoid;
+      height: 100vh;
+      width: 100vw;
+    }
+    .slide.active .slide-inner > * { animation: none; }
+    .slide.active .slide-bg { animation: none; }
+    .slide:last-child { page-break-after: auto; }
+    .pulse, .float { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ==================== SLIDE 1: HERO ==================== -->
+<div class="slide active overlay-dark" id="slide-1">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner text-center">
+    <div class="big-emoji float">&#x1F680;</div>
+    <div class="hero-title">STAGE Playbook<br>+ GSTACK</div>
+    <p class="subtitle" style="max-width: 820px; margin: 0 auto; font-size: 18px; line-height: 1.7;">Multiple repos, low efficiency, no standardized AI workflows &mdash; bugs slip through, effort gets duplicated, knowledge stays siloed.<br><strong style="color: #fff;">One playbook keeps every AI-native team aligned.</strong></p>
+    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap;">
+      <span class="pill pill-accent">Flutter</span>
+      <span class="pill pill-green">Next.js</span>
+      <span class="pill pill-cyan">Node.js</span>
+      <span class="pill pill-yellow">Design</span>
+      <span class="pill pill-red">Marketing</span>
+      <span class="pill pill-accent">Analytics</span>
+    </div>
+    <p style="color: rgba(255,255,255,0.3); margin-top: 20px; font-size: 14px;">STAGE Team &middot; March 2026</p>
+  </div>
+  <div class="slide-number">1 / 10</div>
+  <div class="photo-credit">Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 2: THE HORROR ==================== -->
+<div class="slide overlay-danger" id="slide-2">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <span class="big-emoji" style="font-size: 60px;">&#x1F631;</span>
+      <h2><span class="gradient-red">Real Bugs. Real Production.</span></h2>
+      <p class="subtitle" style="font-size: 18px;">These actually happened at STAGE. No names, just pain.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="incident">
+        <span class="icon">&#x1F4C4;</span>
+        <h4>The 18K-Line CSV</h4>
+        <div class="number pulse">18,000 lines</div>
+        <p>A raw CSV file pushed straight to the repo. Bloated every git clone. Stuck in history forever.</p>
+      </div>
+      <div class="incident">
+        <span class="icon">&#x1F4A3;</span>
+        <h4>We DDoS'd Ourselves</h4>
+        <div class="number pulse">cacheTimeout: 0</div>
+        <p>Cache TTL set to zero in a PR. Every page load hit <strong>getDialect</strong> on the backend. Backend got crushed. The whole platform slowed down.</p>
+      </div>
+      <div class="incident">
+        <span class="icon">&#x1F575;</span>
+        <h4>The Config Smuggler</h4>
+        <div class="number pulse">4 hidden changes</div>
+        <p>PR said "Feature X" but also changed middleware, dynamic routing, and TypeScript config &mdash; just to make CI pass. Got merged.</p>
+      </div>
+      <div class="incident">
+        <span class="icon">&#x1F47B;</span>
+        <h4>The Ghost Branch</h4>
+        <div class="number pulse">1,00,000+ lines</div>
+        <p>PR raised against a months-old branch. The diff? Over 1 lakh lines. Unreviewable. Almost merged.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">2 / 10</div>
+  <div class="photo-credit">Photo: Taylor Vick / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 3: SETUP HELL ==================== -->
+<div class="slide overlay-danger" id="slide-3">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div class="flex" style="align-items: center; gap: 48px;">
+      <div style="flex: 1;">
+        <span class="big-emoji" style="font-size: 64px;">&#x1F92F;</span>
+        <h2>Meanwhile, New Joiners...</h2>
+        <p class="subtitle" style="font-size: 18px; margin-bottom: 20px;">
+          Every new dev went through the same nightmare. Especially non-mobile devs trying to work on Flutter.
+        </p>
+        <div class="incident" style="margin-bottom: 12px;">
+          <span class="icon" style="font-size: 28px;">&#x2615;</span>
+          <h4>Wrong JDK Version</h4>
+          <p>Downloaded JDK 21 when we needed 17. Two hours gone debugging "unsupported class version" errors.</p>
+        </div>
+        <div class="incident" style="margin-bottom: 12px;">
+          <span class="icon" style="font-size: 28px;">&#x1F4BB;</span>
+          <h4>Wrong Android Studio</h4>
+          <p>Installed the latest Android Studio &mdash; incompatible with our Gradle version. Another afternoon wasted.</p>
+        </div>
+        <div class="incident">
+          <span class="icon" style="font-size: 28px;">&#x23F3;</span>
+          <h4>No Standard Process</h4>
+          <p>Every dev figured it out on their own. Asked around on Slack. Copied random configs. Nothing was consistent.</p>
+        </div>
+      </div>
+      <div style="flex: 0 0 340px; text-align: center;">
+        <div class="glass" style="padding: 30px;">
+          <div style="font-size: 100px; margin-bottom: 16px;">&#x1F6D1;</div>
+          <div class="mega-number gradient-red" style="font-size: 64px;">Hours</div>
+          <p style="color: var(--text-muted); font-size: 16px; margin-top: 8px;">wasted per developer<br>on environment setup</p>
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+            <p style="font-size: 13px; color: var(--text-muted);">Non-core mobile devs had it worst &mdash; they just needed to make one small change</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">3 / 10</div>
+  <div class="photo-credit">Photo: Jefferson Santos / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 4: THE FIX ==================== -->
+<div class="slide overlay-success" id="slide-4">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner text-center">
+    <span class="big-emoji float" style="font-size: 64px;">&#x2728;</span>
+    <h2>One Command Fixes Everything</h2>
+    <div style="display: inline-block; background: rgba(0,0,0,0.6); border: 1px solid rgba(6,182,212,0.4); border-radius: 16px; padding: 20px 48px; margin: 16px 0; box-shadow: 0 0 40px rgba(6,182,212,0.15);">
+      <span style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 36px; color: #67e8f9; font-weight: 700;">./setup.sh</span>
+    </div>
+    <p class="subtitle" style="font-size: 18px; max-width: 700px; margin: 16px auto 24px;">
+      Installs the right JDK, right Android Studio, right Flutter SDK, Claude Code, and GSTACK's 9 AI skills &mdash; across every project. Automatically.
+    </p>
+    <div class="grid grid-4" style="max-width: 800px; margin: 0 auto;">
+      <div class="glass-sm text-center">
+        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F4F1;</div>
+        <div style="font-weight: 700; font-size: 14px;">Mobile App</div>
+      </div>
+      <div class="glass-sm text-center">
+        <div style="font-size: 32px; margin-bottom: 6px;">&#x26A1;</div>
+        <div style="font-weight: 700; font-size: 14px;">Express Backend</div>
+      </div>
+      <div class="glass-sm text-center">
+        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F3D7;</div>
+        <div style="font-weight: 700; font-size: 14px;">Nest Backend</div>
+      </div>
+      <div class="glass-sm text-center">
+        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F310;</div>
+        <div style="font-weight: 700; font-size: 14px;">STAGE Web App</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">4 / 10</div>
+  <div class="photo-credit">Photo: Adi Goldstein / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 5: GSTACK CATCHES EVERYTHING ==================== -->
+<div class="slide overlay-success" id="slide-5">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 48px;">&#x1F6E1;</span>
+      <h2>Every Incident? <span class="gradient-green">GSTACK Catches It.</span></h2>
+    </div>
+    <div class="grid grid-2" style="gap: 12px;">
+      <div class="incident" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F4C4; 18K CSV in the repo</h4>
+        <p>Giant file bloating git history</p>
+      </div>
+      <div class="fix-card" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F6E1; /review flags large files</h4>
+        <p>Diff analysis catches anything that doesn't belong. PR blocked before merge.</p>
+      </div>
+      <div class="incident" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F4A3; cacheTimeout: 0 &mdash; backend crushed</h4>
+        <p>Every SSR request hammered backend</p>
+      </div>
+      <div class="fix-card" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F6E1; /plan-eng-review catches performance</h4>
+        <p>Architecture gate detects cache config changes and analyzes blast radius.</p>
+      </div>
+      <div class="incident" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F575; Config changes smuggled into feature PR</h4>
+        <p>Middleware + routing + tsconfig altered</p>
+      </div>
+      <div class="fix-card" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F6E1; /review detects scope creep</h4>
+        <p>Files outside the feature's scope get flagged. Unrelated config changes = rejected.</p>
+      </div>
+      <div class="incident" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F47B; PR against ancient branch &mdash; 100K+ lines</h4>
+        <p>Months of drift, unreviewable diff</p>
+      </div>
+      <div class="fix-card" style="padding: 16px;">
+        <h4 style="font-size: 13px;">&#x1F6E1; /ship checks branch freshness</h4>
+        <p>Detects stale base branches. Prompts rebase before allowing merge.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">5 / 10</div>
+  <div class="photo-credit">Photo: Markus Spiske / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 6: MILESTONES ==================== -->
+<div class="slide overlay-purple" id="slide-6">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1517948430535-1e2469d314fe?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <span style="font-size: 48px;">&#x1F3C6;</span>
+      <h2>What We've <span class="gradient-text">Already Shipped</span></h2>
+    </div>
+    <div class="grid grid-3" style="max-width: 900px; margin: 0 auto;">
+      <div class="milestone">
+        <span class="icon">&#x1F3DB;</span>
+        <h4>Code Review Council</h4>
+        <p><strong style="color: #a5b4fc;">5 AI personas</strong> + Chairman + Judge across all 4 repos. Runs automatically on every PR via GitHub Actions.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x1F9E0;</span>
+        <h4>Auto Knowledge Base</h4>
+        <p>Automated knowledge base updates across all repos. Continuous learning &mdash; the system gets <strong style="color: #a5b4fc;">smarter with every commit</strong>.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x2699;</span>
+        <h4>Standardized Everything</h4>
+        <p>Master scripts, Claude configs, Flutter custom skills &mdash; <strong style="color: #a5b4fc;">identical across all repos</strong>.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x1F527;</span>
+        <h4>Auto PR from Datadog</h4>
+        <p>Datadog errors detected in production &rarr; <strong style="color: #a5b4fc;">fix PR auto-generated</strong>. Humans review, not write.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x1F4F1;</span>
+        <h4>Correct Toolchain</h4>
+        <p>Right JDK. Right Android Studio. Right Flutter SDK. <strong style="color: #a5b4fc;">Minutes, not hours</strong> to set up.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x1F680;</span>
+        <h4>GSTACK Across 4 Repos</h4>
+        <p>9 core AI skills deployed to <strong style="color: #a5b4fc;">all 4 repositories</strong>. Every dev has AI superpowers from day one.</p>
+      </div>
+      <div class="milestone">
+        <span class="icon">&#x1F4AC;</span>
+        <h4>Slack Channel Bugs to PR</h4>
+        <p>Bugs reported in Slack channels &rarr; <strong style="color: #a5b4fc;">auto-converted to PRs</strong>. No manual ticket creation needed.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">6 / 10</div>
+  <div class="photo-credit">Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 7: GSTACK OVERVIEW ==================== -->
+<div class="slide overlay-purple" id="slide-7">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1674027444485-cec3da58eef4?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 16px;">
+      <span style="font-size: 48px;">&#x1F916;</span>
+      <h2>GSTACK &mdash; <span class="gradient-text">Your AI Team</span></h2>
+      <p style="font-size: 17px; color: var(--text-muted);">
+        Built by <strong style="color: #fff;">Garry Tan</strong> (YC President &amp; CEO) from his daily coding practice.
+        <strong style="color: #a5b4fc;">9 specialist roles</strong> as slash commands. <strong style="color: #fcd34d;">16,000+ GitHub stars</strong>.
+      </p>
+      <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px; font-style: italic;">
+        "Planning is not review. Review is not shipping. Founder taste is not engineering rigor."
+      </p>
+    </div>
+    <div style="text-align: center; margin-bottom: 16px;">
+      <p style="font-size: 12px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">The GSTACK Workflow</p>
+      <div class="flow-row" style="justify-content: center;">
+        <span class="flow-chip">&#x1F4A1; Vision</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F3D7; Design</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F528; Build</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F50D; Audit</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F680; Release</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F9EA; QA</span><span class="flow-arr">&rarr;</span>
+        <span class="flow-chip">&#x1F4CA; Reflect</span>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="glass text-center">
+        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F4A1;</div>
+        <h3 style="font-size: 16px; color: var(--cyan);">Vision &amp; Design</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Validate the problem, lock the architecture</p>
+        <div style="margin-top: 6px;">
+          <span class="pill pill-cyan">/plan-ceo-review</span>
+          <span class="pill pill-cyan">/plan-eng-review</span>
+        </div>
+      </div>
+      <div class="glass text-center">
+        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F528;</div>
+        <h3 style="font-size: 16px; color: var(--green);">Build, Ship &amp; QA</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Audit code, release, test visually</p>
+        <div style="margin-top: 6px;">
+          <span class="pill pill-green">/review</span>
+          <span class="pill pill-green">/ship</span>
+          <span class="pill pill-green">/qa</span>
+          <span class="pill pill-green">/qa-only</span>
+          <span class="pill pill-green">/browse</span>
+        </div>
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <p style="font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">STAGE Custom Agents</p>
+          <span class="pill pill-yellow">/flutter-qa</span>
+        </div>
+      </div>
+      <div class="glass text-center">
+        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F4CA;</div>
+        <h3 style="font-size: 16px; color: var(--pink);">Ops &amp; Reflect</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Auth setup, retrospectives, session management</p>
+        <div style="margin-top: 6px;">
+          <span class="pill pill-accent">/setup-browser-cookies</span>
+          <span class="pill pill-accent">/retro</span>
+        </div>
+      </div>
+    </div>
+    <div class="glass text-center" style="margin-top: 14px; padding: 12px;">
+      <p style="font-size: 13px; color: var(--text-muted);">
+        Each skill = a different <strong style="color: #fff;">cognitive mode</strong>. Not one generic AI &mdash; nine specialist engineers thinking differently about your code.
+      </p>
+    </div>
+  </div>
+  <div class="slide-number">7 / 10</div>
+  <div class="photo-credit">Photo: Growtika / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 8: REVIEW COUNCIL ==================== -->
+<div class="slide overlay-dark" id="slide-8">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1578054041218-5ee0003926dd?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 18px;">
+      <span style="font-size: 48px;">&#x1F3DB;</span>
+      <h2>The Code Review Council</h2>
+      <p style="font-size: 16px; color: var(--text-muted);">5 AI personas review every PR in parallel &rarr; Chairman deduplicates &rarr; Judge filters noise. <strong style="color: #fff;">Runs automatically on every PR via GitHub Actions.</strong></p>
+    </div>
+    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F9D3;</div>
+        <h4 style="font-size: 13px; margin-bottom: 4px;">Senior Architect</h4>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Architecture, patterns, Clean Architecture layers, DI compliance</p>
+      </div>
+      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F480;</div>
+        <h4 style="font-size: 13px; margin-bottom: 4px;">Brutal Critic</h4>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Bugs, null safety, race conditions, missing error handling</p>
+      </div>
+      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F608;</div>
+        <h4 style="font-size: 13px; margin-bottom: 4px;">Devil's Advocate</h4>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Production failure modes, stale data, app lifecycle edge cases</p>
+      </div>
+      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F512;</div>
+        <h4 style="font-size: 13px; margin-bottom: 4px;">Security Hawk</h4>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">OWASP Mobile Top 10, secrets, insecure storage, auth validation</p>
+      </div>
+      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x26A1;</div>
+        <h4 style="font-size: 13px; margin-bottom: 4px;">Perf Nerd</h4>
+        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Widget rebuilds, memory leaks, O(n&sup2;) in build, image optimization</p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: stretch;">
+      <div style="flex: 1; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F451;</div>
+        <h4 style="font-size: 14px; color: var(--yellow); margin-bottom: 4px;">Chairman</h4>
+        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Deduplicates findings, resolves severity conflicts, boosts issues flagged by 2+ personas</p>
+      </div>
+      <div style="display: flex; align-items: center; font-size: 24px; color: rgba(255,255,255,0.2);">&rarr;</div>
+      <div style="flex: 1; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x2696;</div>
+        <h4 style="font-size: 14px; color: var(--red); margin-bottom: 4px;">Judge</h4>
+        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Final quality gate. Ruthlessly filters noise, removes low-confidence findings, keeps only real issues</p>
+      </div>
+      <div style="display: flex; align-items: center; font-size: 24px; color: rgba(255,255,255,0.2);">&rarr;</div>
+      <div style="flex: 1; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+        <div style="font-size: 28px; margin-bottom: 4px;">&#x2705;</div>
+        <h4 style="font-size: 14px; color: var(--green); margin-bottom: 4px;">PR Comments</h4>
+        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Inline comments posted to GitHub PR with severity labels: &#x1F534; HIGH &nbsp; &#x1F7E1; MEDIUM &nbsp; &#x1F7E2; LOW</p>
+      </div>
+    </div>
+    <div class="glass text-center" style="margin-top: 12px; padding: 10px;">
+      <p style="font-size: 13px; color: var(--text-muted);">
+        &#x1F6E1; HIGH findings &rarr; Changes Requested &nbsp; | &nbsp; MEDIUM &rarr; Comments &nbsp; | &nbsp; Clean code &rarr; Auto-Approved
+      </p>
+    </div>
+  </div>
+  <div class="slide-number">8 / 10</div>
+  <div class="photo-credit">Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 9: ALL PROJECTS ==================== -->
+<div class="slide overlay-blue" id="slide-9">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div style="text-align: center; margin-bottom: 24px;">
+      <span style="font-size: 48px;">&#x1F30D;</span>
+      <h2>Same Guards. Every Repo.</h2>
+    </div>
+    <div class="proj">
+      <span class="emoji">&#x1F4F1;</span>
+      <span class="name">Mobile App</span>
+      <span class="desc">GSTACK skills in CLAUDE.md + .claude/skills/gstack/</span>
+    </div>
+    <div class="proj">
+      <span class="emoji">&#x26A1;</span>
+      <span class="name">Express Backend</span>
+      <span class="desc">Express.js &mdash; where the dialect cache bombing happened</span>
+    </div>
+    <div class="proj">
+      <span class="emoji">&#x1F3D7;</span>
+      <span class="name">Nest Backend</span>
+      <span class="desc">NestJS &mdash; setup via playbook</span>
+    </div>
+    <div class="proj">
+      <span class="emoji">&#x1F310;</span>
+      <span class="name">STAGE Web App</span>
+      <span class="desc">Next.js &mdash; where the config smuggling and cache bust originated</span>
+    </div>
+    <div class="glass text-center" style="margin-top: 16px; padding: 16px;">
+      <p style="font-size: 15px; color: var(--text-muted);">
+        Every single repo gets all 9 GSTACK skills:
+        <span class="pill pill-cyan" style="font-size: 11px;">/plan-ceo-review</span>
+        <span class="pill pill-cyan" style="font-size: 11px;">/plan-eng-review</span>
+        <span class="pill pill-green" style="font-size: 11px;">/review</span>
+        <span class="pill pill-green" style="font-size: 11px;">/ship</span>
+        <span class="pill pill-green" style="font-size: 11px;">/qa</span>
+        <span class="pill pill-yellow" style="font-size: 11px;">/browse</span>
+        <span class="pill pill-accent" style="font-size: 11px;">/retro</span>
+        and more
+      </p>
+    </div>
+  </div>
+  <div class="slide-number">9 / 10</div>
+  <div class="photo-credit">Photo: NASA / Unsplash</div>
+</div>
+
+<!-- ==================== SLIDE 10: HOW TO + CLOSING ==================== -->
+<div class="slide overlay-dark" id="slide-10">
+  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1517976487492-5750f3195933?w=1920&q=80&auto=format&fit=crop');"></div>
+  <div class="bg-mesh"></div>
+  <div class="grid-bg"></div>
+  <div class="slide-inner">
+    <div class="flex" style="gap: 36px; align-items: flex-start;">
+      <div style="flex: 1;">
+        <span style="font-size: 40px;">&#x1F3AC;</span>
+        <h2 style="font-size: 36px;">Get Started Now</h2>
+        <div class="terminal" style="margin-bottom: 16px;">
+          <span class="comment"># 1. Clone the playbook</span><br>
+          <span class="prompt">$</span> git clone stage-playbook<br>
+          <span class="prompt">$</span> cd stage-playbook<br><br>
+          <span class="comment"># 2. Run setup &mdash; pick your projects</span><br>
+          <span class="prompt">$</span> ./setup.sh<br><br>
+          <span class="highlight">[A]</span> All Projects<br>
+          <span class="highlight">[1]</span> Mobile App<br>
+          <span class="highlight">[2]</span> Express Backend<br>
+          <span class="highlight">[3]</span> Nest Backend<br>
+          <span class="highlight">[4]</span> STAGE Web App<br><br>
+          <span class="success">&#x2713; JDK 17 installed</span><br>
+          <span class="success">&#x2713; Android Studio configured</span><br>
+          <span class="success">&#x2713; Claude Code + GSTACK ready</span><br><br>
+          <span class="comment"># 3. Start using skills immediately</span><br>
+          <span class="prompt">$</span> /review &nbsp; /qa &nbsp; /ship
+        </div>
+      </div>
+      <div style="flex: 0 0 380px;">
+        <div class="grid grid-3" style="margin-bottom: 16px;">
+          <div class="stat-card">
+            <div class="num gradient-green">5+2</div>
+            <div class="label">Review Council</div>
+          </div>
+          <div class="stat-card">
+            <div class="num gradient-text">4</div>
+            <div class="label">Repos Integrated</div>
+          </div>
+          <div class="stat-card">
+            <div class="num" style="color: var(--cyan);">9</div>
+            <div class="label">GSTACK Skills</div>
+          </div>
+        </div>
+        <div class="glass" style="border-color: rgba(16, 185, 129, 0.25); padding: 18px; text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 48px; margin-bottom: 8px;">&#x1F3AF;</div>
+          <div style="font-size: 40px; font-weight: 900; color: var(--green);">ZERO</div>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+            Zero 18K CSVs. Zero cache busts.<br>
+            Zero config smuggling. Zero ghost PRs.<br>
+            Zero wrong JDK installs.
+          </p>
+        </div>
+        <div class="quote-box">
+          <p style="font-size: 15px;">"Boil the Lake" &mdash; AI makes completeness affordable. Don't cut scope; cover everything.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">10 / 10</div>
+  <div class="photo-credit">Photo: SpaceX / Unsplash</div>
+</div>
+
+<script>
+  // Local pre-generated MP3 files — no API calls needed
+  const slideAudioFiles = [
+    'audio/slide-01.mp3',
+    'audio/slide-02.mp3',
+    'audio/slide-03.mp3',
+    'audio/slide-04.mp3',
+    'audio/slide-05.mp3',
+    'audio/slide-06.mp3',
+    'audio/slide-07.mp3',
+    'audio/slide-08.mp3',
+    'audio/slide-09.mp3',
+    'audio/slide-10.mp3'
+  ];
+
+  let currentAudio = null;
+  let isSpeaking = false;
+
+  function stopAllAudio() {
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio.onended = null;
+      currentAudio = null;
+    }
+    isSpeaking = false;
+    updateSpeakerIcon();
+  }
+
+  function speakSlide(slideIndex) {
+    stopAllAudio();
+
+    const src = slideAudioFiles[slideIndex];
+    if (!src) return;
+
+    const audio = new Audio(src);
+    currentAudio = audio;
+    isSpeaking = true;
+    updateSpeakerIcon();
+
+    audio.onended = () => {
+      isSpeaking = false;
+      currentAudio = null;
+      updateSpeakerIcon();
+    };
+
+    audio.onerror = () => {
+      console.error('Audio load error for:', src);
+      isSpeaking = false;
+      currentAudio = null;
+      updateSpeakerIcon();
+    };
+
+    audio.play();
+  }
+
+  function toggleSpeech() {
+    if (isSpeaking) {
+      stopAllAudio();
+    } else {
+      speakSlide(current);
+    }
+  }
+
+  function updateSpeakerIcon() {
+    const btn = document.getElementById('speaker-btn');
+    if (btn) {
+      btn.textContent = isSpeaking ? '🔊' : '🔈';
+      btn.title = isSpeaking ? 'Stop narration (S)' : 'Play narration (S)';
+    }
+  }
+
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  const total = slides.length;
+
+  function showSlide(n) {
+    slides[current].classList.remove('active');
+    current = ((n % total) + total) % total;
+    slides[current].classList.add('active');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+
+    // Auto-speak on slide change
+    speakSlide(current);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      showSlide(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      showSlide(current - 1);
+    } else if (e.key === 'Home') {
+      showSlide(0);
+    } else if (e.key === 'End') {
+      showSlide(total - 1);
+    } else if (e.key === 's' || e.key === 'S') {
+      toggleSpeech();
+    }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) showSlide(current + (diff > 0 ? 1 : -1));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'speaker-btn') return;
+    if (e.clientX > window.innerWidth / 2) showSlide(current + 1);
+    else showSlide(current - 1);
+  });
+
+  // Don't auto-speak on initial load, wait for first interaction
+  slides[0].classList.add('active');
+  progress.style.width = (1 / total * 100) + '%';
+</script>
+
+<!-- Speaker toggle button -->
+<div id="speaker-btn" onclick="toggleSpeech()" style="
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.2s;
+  user-select: none;
+" title="Play narration (S)">🔈</div>
+</body>
+</html>
