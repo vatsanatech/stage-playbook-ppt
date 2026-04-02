@@ -982,7 +982,7 @@
       <h2 style="font-size: 36px;">&#x1F3AC; Live Demo &mdash; <span class="gradient-orange">Setup se Paperclip Tak</span></h2>
     </div>
     <div style="max-width: 960px; margin: 0 auto;">
-      <video id="demo-video" src="demo.mp4" controls style="width: 100%; border-radius: 12px; border: 2px solid rgba(249,115,22,0.3);"></video>
+      <video id="demo-video" src="demo.mp4" controls style="width: 100%; border-radius: 12px; border: 2px solid rgba(249,115,22,0.3);" playsinline></video>
     </div>
   </div>
   <div class="slide-number">13 / 15</div>
@@ -1056,7 +1056,7 @@
     'audio/slide-11-build.mp3',      // 10: Build Features
     'audio/slide-12-setup.mp3',      // 11: Setup Details
     'audio/slide-12-paperclip.mp3',  // 12: Paperclip Info
-    'audio/slide-13-video.mp3',      // 13: Video Demo (synced voiceover)
+    null,                            // 13: Video Demo (voiceover IN video)
     null,                            // 14: Q&A Final
     'audio/slide-16-closing.mp3'     // 15: Closing
   ];
@@ -1077,10 +1077,10 @@
     slides[current].classList.add('active');
     progress.style.width = ((current + 1) / total * 100) + '%';
 
-    // Auto-play video on video slide (index 12 = slide 13)
+    // Auto-play video WITH sound on video slide (index 12 = slide 13)
     if (current === 12 && demoVideo) {
       demoVideo.currentTime = 0;
-      demoVideo.muted = true;
+      demoVideo.muted = false;
       demoVideo.play().catch(function(){});
     }
 
