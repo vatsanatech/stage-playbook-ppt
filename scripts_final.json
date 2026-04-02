@@ -1,72 +1,82 @@
 [
   {
     "slide": 1,
-    "title": "HERO — Claude Use Kar Rahe Ho? Ab UPGRADE Hoga.",
+    "file": "slide-01.mp3",
     "text": "Aap sab Claude use kar rahe ho. Aur achha use kar rahe ho. Lekin ek sachhi baat batata hoon. Aap abhi Claude ki sirf 20 PERCENT taaqat use kar rahe ho. Baaki 80 percent? Woh hai 50 se zyada AI skills, automated agents jo RAAT BHAR kaam karte hain, ek design system jo STAGE ki brand language jaanta hai, aur safety rules jo aapko bina soche protect karti hain. Yeh sab milega AAJKE baad. Ek command. 5 minute. Aur aap UPGRADED."
   },
   {
     "slide": 2,
-    "title": "REAL INCIDENTS — Yeh Actually Hua Hai STAGE Mein",
-    "text": "Lekin pehle samjho ki humein yeh kyun karna pad raha hai. Yeh REAL incidents hain. Kisi ka naam nahi lunga, sirf DARD dikhaunga. Pehla, ek bande ne 18 HAZAAR lines ki CSV file seedha repo mein push kar di. Ab woh file har kisika git clone SLOW kar rahi hai. FOREVER. Doosra, kisine cache timeout ZERO set kar diya ek PR mein. Matlab kya? Har page load pe SEEDHA backend pe request jaa rahi thi. Humne khud ko DDoS kar diya! Poora platform SLOW ho gaya. Teesra, ek PR ka title tha feature X. Lekin andar CHUPKE se middleware change, routing change, aur TypeScript config change bhi thi. Sirf CI pass karne ke liye. Merge ho gaya! Chautha, ek PR aayi MONTHS purani branch ke against. Diff? EK LAKH se zyada lines! Review IMPOSSIBLE. Aur yeh almost merge hone wali thi."
+    "file": "slide-02-jargon.mp3",
+    "text": "Aage badhne se pehle, kuch basic terms samjh lete hain. Yeh words aayenge aage, toh abhi yaad kar lo. REPO matlab repository. Ek folder jismein poora project ka code hota hai. Jaise Google Drive ka folder, lekin code ke liye. BRANCH matlab ek copy. Tum changes karo, original safe rahe. Jaise document ka Make a Copy. GIT CLONE matlab kisi ka repo DOWNLOAD karna apne laptop pe. PR matlab Pull Request. Tum bolo yeh changes dekh lo, theek hai toh merge kar do. DDoS. Jab server pe itne requests aa jayein ki woh CRASH ho jaaye. Jaise ek dukaan mein ek saath 10 lakh log ghus jayein. Aur AI AGENT. Ek AI jo KHUD kaam karta hai bina aapke. Jaise ek employee jo raat bhar kaam kare, subah report de. Bas itna yaad rakhna hai!"
   },
   {
     "slide": 3,
-    "title": "WHY PLAYBOOK — Sab Claude Use Kar Rahe Hain, Lekin ALAG ALAG",
-    "text": "Aur ek aur problem. Sab Claude use kar rahe hain, lekin sab ALAG ALAG tarike se. Kisi ke paas naye skills hain, kisi ke paas nahi. Kisi ko pata hai slash stage designer se design hota hai, kisi ko pata hi nahi. Koi marketing skills use kar raha hai, koi manually likh raha hai. Aur jab HUM naya skill add karte hain? Kisiko pata hi NAHI chalta! Result? Kuch log 5x fast hain, aur kuch log wahi purane tarike se kaam kar rahe hain. Yeh UNFAIR hai. Playbook yeh fix karta hai. EK jagah se sabko SAME tools. Aur jab naya skill aaye? SABKO mil jaaye. Koi peeche na rahe."
+    "file": "slide-03-incidents.mp3",
+    "text": "Ab samjho yeh playbook kyun banana pada. Yeh REAL incidents hain STAGE mein. Pehla, ek bande ne 18 HAZAAR lines ki CSV file seedha repo mein push kar di. Ab woh file har kisika download SLOW kar rahi hai. FOREVER. Doosra, kisine cache timeout ZERO set kar diya. Matlab har page load pe SEEDHA backend hit. Humne khud ko DDoS kar diya! Poora platform SLOW. Teesra, ek PR ka title tha feature X. Lekin andar CHUPKE se middleware aur config changes bhi thi. Merge ho gaya! Chautha, ek PR aayi MONTHS purani branch ke against. Diff? EK LAKH lines! Review IMPOSSIBLE."
   },
   {
     "slide": 4,
-    "title": "Q&A BREAK 1 — Questions About The Problem?",
-    "text": ""
+    "file": "slide-04-why.mp3",
+    "text": "Aur ek aur problem. Sab Claude use kar rahe hain, lekin sab ALAG ALAG tarike se. Kisi ke paas naye skills hain, kisi ke paas nahi. Kisi ko pata hai slash stage designer se design hota hai, kisi ko pata hi nahi. Koi marketing skills use kar raha hai, koi manually likh raha hai. Aur jab HUM naya skill add karte hain? Kisiko pata hi NAHI chalta! Kuch log 20x fast hain, aur kuch log wahi purane tarike se kaam kar rahe hain. Playbook yeh fix karta hai. EK jagah se sabko SAME tools. Aur jab naya skill aaye? SABKO mil jaaye."
   },
   {
     "slide": 5,
-    "title": "WHAT YOU GET — 50+ Skills, Every Team",
-    "text": "Ab solution dekhte hain. STAGE AI Playbook mein kya kya milta hai? PEHLA, Gstack. 25 se zyada professional skills. Planning, code review, QA testing, security audit, design consultation, deployment, retrospective. DOOSRA, 18 skill packs. Marketing skills, product management, PDF generator, presentation builder, UI/UX design, aur bahut kuch. TEESRA, STAGE ke APNE custom skills. Jaise slash stage designer. Claude STAGE ka designer BAN JAATA hai. Woh jaanta hai black canvas, red brand color, Bricolage Grotesque font, 4 pixel spacing grid. CHAUTHA, Paperclip. AI agents ka manager. Agents ko kaam do, woh RAAT BHAR karte hain. Subah result. Aur PAANCHWA, Skill Creator. NAYA skill banana hai? Banao! Team ke liye share karo. Sabki productivity badhe."
+    "file": null,
+    "text": ""
   },
   {
     "slide": 6,
-    "title": "EVERY TEAM — Har Role Ka Apna AI Agent",
-    "text": "Ab SABSE important slide. Yeh sirf engineering ya social media ke liye NAHI hai. Har team ka apna agent ho sakta hai! Content team? Trend Watcher. Raat bhar YouTube, Twitter scan. Subah briefing. Sapna Choudhary trending hai, STAGE pe nahi hai, ACTION LO. Social media? Ek show upload, 5 platforms ke posts TAYAAR. Instagram fun, Twitter punchy. Bas APPROVE karo. HR? 200 resumes aaye, agent top 10 shortlist karega with reasons. Aapko sirf INTERVIEW lena hai. Finance? Monthly expense report KHUD banega. Unusual spends HIGHLIGHT. Legal? Compliance deadlines track, contract review, risk flag. Operations? Daily MIS report AUTOMATIC. Roz subah clean summary. Data team? Dashboard summary plain Hindi mein. Graphic design? Slash stage designer bolo, STAGE ki design language mein mockup. Marketing? Campaign copy 5 variants. Product? User feedback se sorted feature priority list. KISI BHI role mein repetitive kaam hai? Agent ka kaam hai. Tumhara NAHI."
+    "file": "slide-06-whatyouget.mp3",
+    "text": "Ab solution dekhte hain. Playbook mein kya kya milta hai? Pehla, Gstack. 25 se zyada professional skills. Planning, code review, QA testing, security audit, design consultation, deployment. Doosra, 18 skill packs. Flutter ke 49 skills, Firebase, Next.js, React, Stripe payments, Sentry error tracking, Supabase database, Shadcn UI, UI/UX Pro, Marketing, Product Management, PDF generator, Presentation builder, Dev Superpowers, Frontend Design, Redis, Skill Creator, aur Agent Browser. Teesra, STAGE ke APNE custom skills. Jaise slash stage designer. Claude STAGE ka designer BAN JAATA hai. Colors, fonts, spacing sab jaanta hai. Chautha, Paperclip. AI agents ka manager. Aur paanchwa, Skill Creator. NAYA skill banana hai? Banao! Team ke liye share karo."
   },
   {
     "slide": 7,
-    "title": "ALREADY WORKING — Yeh Dream Nahi, Reality Hai",
-    "text": "Aur yeh sirf future plan nahi hai. Humne ALREADY kuch cheezein ship kar di hain! PEHLI, Automated SEO. STAGE ki website pe AI KHUD naye pages bana raha hai. Backlinks improve kar raha hai. Matlab? Google pe search karo best Haryanvi web series, top Rajasthani movies. STAGE sabse upar aayega. Pehle SEO expert MONTHS lagata. AI HAFTE mein kar raha hai. DOOSRI, slash stage designer. ABHI live hai. Claude se bolo STAGE ke liye screen design karo. Woh jaanta hai sab kuch. Colors, fonts, spacing, components. TEESRI, Paperclip ALREADY humari stage playbook repo mein hai! Run paperclip dot sh chalao, server start, dashboard khulega browser mein. CHAUTHI, automated code review. Har PR pe AI bugs dhundta hai, security check karta hai. PAANCHVI, auto fix. Production error aaya? AI ne KHUD fix likh diya."
+    "file": "slide-07-paperclip.mp3",
+    "text": "Ab Paperclip ki baat karte hain detail mein. Yeh KYA hai? Ek office manager hai AI agents ka. Tum bolo kya karna hai, Paperclip multiple agents ko kaam pe laga deta hai. Ek agent trends track kar raha hai, ek comments padh raha hai, ek posts bana raha hai, sab EK SAATH. KAISE kaam karta hai? Step 1, tum agent banao, jaise roz subah trends check kar. Step 2, Paperclip schedule set karta hai. Step 3, agent KHUD kaam karta hai, raat bhar bhi. Step 4, result tumhare dashboard mein, approve ya reject karo. TUMHARE LIYE kya kar sakta hai? Trends track karna, roz automatically. Comments aur reviews analyze karna, user demands sorted. Reports generate karna, daily weekly monthly. Content create karna, 5 platforms ek click mein. Funnel monitor karna, drop detect aur reason batana. Koi bhi repetitive task, automate karo. Aur yeh ALREADY humari playbook repo mein hai. Setup karo, Paperclip bhi ready."
   },
   {
     "slide": 8,
-    "title": "Q&A BREAK 2 — Questions About The Solution?",
-    "text": ""
+    "file": "slide-08-teams.mp3",
+    "text": "Ab SABSE important slide. Yeh sirf engineering ya social media ke liye NAHI hai. Har team ka apna AI agent ho sakta hai! Content team? Trend Watcher, subah briefing. Social media? Auto posting, 5 platforms ek click. Growth Product team? Funnel analysis, drop detect, reason batayega. Finance? Expense reports automatic, anomalies highlighted. Legal? Compliance deadlines track, risks flag. Operations? Daily MIS, roz subah clean summary. Data team? Dashboard summary plain Hindi mein. Engineering? Bug aaya, agent KHUD fix likhega. Graphic Design? Slash stage designer, STAGE ki design language mein mockup. Marketing? Campaign copy 5 variants, A B testing ready. HR? 200 resumes mein se top 10 shortlist. KISI BHI role mein repetitive kaam hai? Agent ka kaam hai. Tumhara NAHI."
   },
   {
     "slide": 9,
-    "title": "BUILD FEATURES — Aap Bhi Bana Sakte Ho!",
-    "text": "Ab ek EXCITING baat. Aap mein se koi bhi STAGE app ya website pe features bana sakta hai! Claude aapka code likhega. Design karega. Test karega. Aapko sirf BATANA hai ki kya chahiye. PM ho? Feature bana do. Designer ho? Screen implement karo. Marketing ho? Landing page bana do. Lekin iske liye aapko GitHub access chahiye. Humse maango. Hum aapko repo access de denge. Phir Claude ke saath milke STAGE pe feature ship karo. Yeh AI NATIVE company hai. Kisi bhi role se feature ship ho sakta hai."
+    "file": "slide-09-shipped.mp3",
+    "text": "Aur yeh sirf future plan nahi hai. Already kuch cheezein LIVE hain! Automated SEO. STAGE ki website pe AI KHUD naye pages bana raha hai. Backlinks improve kar raha hai. Google pe search karo best Haryanvi web series, STAGE upar aayega. Slash stage designer ABHI live hai! Claude se bolo STAGE ke liye screen design karo, woh jaanta hai sab kuch. Automated code review. Har PR pe AI bugs dhundta hai, security check karta hai. Auto fix. Production error aaya? AI ne KHUD fix likh diya aur review ke liye bhej diya. Aur Backlink Builder bhi automatically Google ranking improve kar raha hai."
   },
   {
     "slide": 10,
-    "title": "CREATE & SHARE SKILLS — Apna Skill Banao",
-    "text": "Aur ek last superpower. Skill Creator. Aap KHUD naye skills bana sakte ho! Sochiye, aapki team mein koi kaam baar baar hota hai. Uska skill bana do. Team mein share karo. Jaise humne slash stage designer banaya. Aap bhi bana sakte ho. Slash weekly report. Slash competitor analysis. Slash content brief. Slash invoice generator. Jo bhi pattern hai kaam mein, uska SKILL banao. SABKI productivity badhe."
-  },
-  {
-    "slide": 11,
-    "title": "SAFETY — Invisible Protection, Woh Incidents DOBARA Nahi Honge",
-    "text": "Yaad hai woh incidents? 18 hazaar line CSV? DDoS? Config smuggling? Ghost branch? Playbook ke baad yeh DOBARA nahi honge. AI KABHI passwords leak nahi karega. KABHI seedha main branch pe push nahi karega. KABHI bina test kiye done nahi bolega. Badi files automatically FLAG hongi. Scope creep DETECT hoga. Stale branches REJECT hongi. Aur SABSE achi baat? Yeh rules INVISIBLE hain. Tumhe kuch yaad rakhne ki zaroorat NAHI. Playbook ne sab set kar diya."
-  },
-  {
-    "slide": 12,
-    "title": "HOW TO START — Slack Pe Script Milega",
-    "text": "Toh shuru kaise karein? Bahut simple. Humne Slack pe setup script share kiya hai. Download karo. Run karo. Menu mein 8 dabao. 5 minute wait karo. BAS! 50 se zyada skills install. Paperclip ready. Security rules ON. Design system SET. SAB automatic. Koi coding nahi chahiye. Aur haan, agar features banana chahte ho? Humse GitHub access maango. Hum de denge. Aur agar apni team ke liye naya skill banana hai? Slash skill creator se banao, share karo!"
-  },
-  {
-    "slide": 13,
-    "title": "Q&A FINAL — Questions?",
+    "file": null,
     "text": ""
   },
   {
+    "slide": 11,
+    "file": "slide-11-build.mp3",
+    "text": "Ab ek EXCITING baat. Aap mein se koi bhi STAGE app ya website pe features bana sakta hai! Claude aapka code likhega. Design karega. Test karega. Aapko sirf BATANA hai ki kya chahiye. PM ho? Feature bana do. Designer ho? Screen implement karo. Marketing ho? Landing page bana do. Lekin iske liye aapko GitHub access chahiye. Humse maango. Hum aapko repo access de denge. Yeh AI NATIVE company hai. Kisi bhi role se feature ship ho sakta hai."
+  },
+  {
+    "slide": 12,
+    "file": "slide-12-setup.mp3",
+    "text": "Toh setup KAISE hoga? Step by step dikhata hoon. Slack pe humne ek zip file share ki hai. Download karo. Unzip karo. Aur setup dot sh run karo. Ek menu aayega. Ab yahan DO types hain. TYPE ONE, AI Only Setup. Yeh SABKE liye hai. Menu mein 8 dabao. 5 minute wait karo. DONE. Claude Code install hoga, Gstack ke 25 se zyada skills, Paperclip AI agent manager, 18 skill packs, slash stage designer, security rules, SAB AUTOMATIC. TYPE TWO, Dev Setup. Code karna hai STAGE ke app ya website pe? Options 1 se 7 mein se project choose karo. Agar DEV setup mein interest hai, session ke baad humse connect karo. Hum setup kar denge."
+  },
+  {
+    "slide": 13,
+    "file": "slide-13-safety.mp3",
+    "text": "Yaad hai woh incidents? 18 hazaar line CSV? DDoS? Config smuggling? Ghost branch? Playbook ke baad yeh DOBARA nahi honge. AI KABHI passwords leak nahi karega. KABHI seedha main branch pe push nahi karega. KABHI bina test kiye done nahi bolega. Badi files FLAG hongi. Scope creep DETECT hoga. Stale branches REJECT hongi. Aur yeh rules INVISIBLE hain. Tumhe kuch yaad rakhne ki zaroorat NAHI. Playbook ne sab set kar diya."
+  },
+  {
     "slide": 14,
-    "title": "CLOSING",
+    "file": "slide-14-demo.mp3",
+    "text": "Ab dekhte hain POORA flow. Zip download se leke Paperclip open hone tak. Pehle zip download karo Slack se. Phir unzip. Setup dot sh run karo. Menu mein 8 dabao. 5 minute mein sab install. Aur phir Paperclip ka dashboard khulega aapke browser mein. Dekhiye."
+  },
+  {
+    "slide": 15,
+    "file": null,
+    "text": ""
+  },
+  {
+    "slide": 16,
+    "file": "slide-16-closing.mp3",
     "text": "Toh yaad rakhiye. Claude toh sab ke paas hai. Playbook usse SUPERCHARGE karta hai. 50 se zyada skills. Har team ke liye agents. Naye skills har hafte. Aap KHUD bhi skills banao. Woh purani incidents? Ab IMPOSSIBLE. Jo kaam baar baar karo, woh AGENT ka kaam hai. Tumhara kaam hai SOCHNA, DECIDE karna, CREATIVE hona. STAGE, AI native since day one. Chalo, UPGRADE karte hain! Dhanyawaad!"
   }
 ]
