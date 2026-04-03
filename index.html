@@ -65,17 +65,23 @@
     .slide-inner.full {
       max-width: 100%;
       padding: 20px 40px;
+    }
+
+    /* Screenshot slides only: text fixed, image fills remaining */
+    .slide-inner.ss {
+      max-width: 100%;
+      padding: 20px 40px;
       height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Screenshot slides: text fixed, image fills remaining */
-    .slide-inner.full > img {
+    .slide-inner.ss > img {
       flex: 1;
       min-height: 0;
       object-fit: contain;
       object-position: center top;
+      border-radius: 12px;
     }
 
     .slide-bg {
@@ -1343,7 +1349,7 @@
   <!-- ==================== SLIDE 8: STEP 1 ==================== -->
   <div class="slide" id="slide-8">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 1 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Slack Se Download Karo</span>
@@ -1356,7 +1362,7 @@
   <!-- ==================== SLIDE 9: STEP 2 ==================== -->
   <div class="slide" id="slide-9">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 2 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Desktop Pe Save Karo</span>
@@ -1369,7 +1375,7 @@
   <!-- ==================== SLIDE 10: STEP 3 ==================== -->
   <div class="slide" id="slide-10">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
         <span class="step-label">Step 3 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Right Click &rarr; New Terminal at Folder</span>
@@ -1382,7 +1388,7 @@
   <!-- ==================== SLIDE 11: STEP 4 ==================== -->
   <div class="slide" id="slide-11">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 4 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Terminal mein:</span>
@@ -1395,7 +1401,7 @@
   <!-- ==================== SLIDE 12: STEP 5 ==================== -->
   <div class="slide" id="slide-12">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 5 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Option</span>
@@ -1410,7 +1416,7 @@
   <!-- ==================== SLIDE 13: STEP 6 ==================== -->
   <div class="slide" id="slide-13">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 6 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Automatic Install</span>
@@ -1423,7 +1429,7 @@
   <!-- ==================== SLIDE 14: STEP 7 ==================== -->
   <div class="slide" id="slide-14">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Step 7 of 7</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Paperclip Ready!</span>
@@ -1485,7 +1491,7 @@
   <!-- ==================== SLIDE 17: COMPANY BANAO ==================== -->
   <div class="slide" id="slide-17">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Paperclip Step 1</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Company Banao</span>
@@ -1498,7 +1504,7 @@
   <!-- ==================== SLIDE 18: AGENT BANAO ==================== -->
   <div class="slide" id="slide-18">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Paperclip Step 2</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Agent Banao</span>
@@ -1511,7 +1517,7 @@
   <!-- ==================== SLIDE 19: TASK DO ==================== -->
   <div class="slide" id="slide-19">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Paperclip Step 3</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Task Do &rarr; LAUNCH! &#x1F680;</span>
@@ -1524,7 +1530,7 @@
   <!-- ==================== SLIDE 20: AGENT RUNNING ==================== -->
   <div class="slide" id="slide-20">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span class="step-label">Paperclip Step 4</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Agent KHUD Kaam Kar Raha Hai</span>
@@ -1537,7 +1543,7 @@
   <!-- ==================== SLIDE 21: RESULTS ==================== -->
   <div class="slide" id="slide-21">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:24px; margin-bottom:8px;">
         <span class="step-label">Result</span>
         <span class="screenshot-text" style="font-size:36px; margin:0;">Dashboard</span>
@@ -1552,7 +1558,7 @@
   <!-- ==================== SLIDE 22: USE CASES ==================== -->
   <div class="slide" id="slide-22">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <h2>Paperclip <span class="gradient-text">Use Cases</span> — Har Team Ke Liye</h2>
       <div class="grid grid-2" style="gap:20px; margin-top:20px;">
         <div class="usecase-card">
@@ -1768,7 +1774,7 @@
   <!-- AR 2: REAL PROOF — DAILY SLACK -->
   <div class="slide" id="slide-ar2">
     <div class="bg-mesh"></div>
-    <div class="slide-inner full">
+    <div class="slide-inner ss">
       <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
         <span style="font-size:40px;">&#x1F4AC;</span>
         <span style="font-size:36px; font-weight:800; color:#fff;">Real Proof: ROZ Automated Slack Messages</span>
