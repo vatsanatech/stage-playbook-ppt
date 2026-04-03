@@ -919,6 +919,351 @@
     </div>
   </div>
 
+  <!-- ==================== CLAUDE BEST PRACTICES — 10 SLIDES ==================== -->
+
+  <!-- BP 1: TALK NATURALLY -->
+  <div class="slide" id="slide-bp1">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">1</span>
+        <h2 style="font-size:56px; margin:0;">Seedha Bolo, <span class="gradient-cyan">Hindi Mein Bolo</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Claude ko English grammar class ki zaroorat nahi hai. Bolo jaise dost se baat karte ho!" &#x1F60E;
+      </p>
+      <div class="grid grid-2" style="gap:20px;">
+        <div class="glass" style="padding:20px; border-color:rgba(16,185,129,0.3);">
+          <p style="font-size:22px; color:var(--green); font-weight:700; margin-bottom:10px;">&#x2705; Aise Bolo:</p>
+          <div style="font-size:24px; line-height:2; color:var(--text-muted);">
+            <div>"<strong style="color:#fff;">login page fix kardo bhai</strong>"</div>
+            <div>"<strong style="color:#fff;">yeh button green kardo</strong>"</div>
+            <div>"<strong style="color:#fff;">is file mein kya ho raha hai samjhao</strong>"</div>
+            <div>"<strong style="color:#fff;">test likh do iske liye</strong>"</div>
+          </div>
+        </div>
+        <div class="glass" style="padding:20px; border-color:rgba(239,68,68,0.3);">
+          <p style="font-size:22px; color:var(--red); font-weight:700; margin-bottom:10px;">&#x274C; Yeh MAT Bolo:</p>
+          <div style="font-size:24px; line-height:2; color:var(--text-muted);">
+            <div style="text-decoration:line-through; opacity:0.5;">"Please implement a mutation handler for the authentication module"</div>
+            <div style="margin-top:12px; font-size:20px; color:rgba(255,255,255,0.3);">Itna formal hone ki zaroorat nahi &#x1F926;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 2: PERMISSION MODES -->
+  <div class="slide" id="slide-bp2">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">2</span>
+        <h2 style="font-size:56px; margin:0;">Permission Modes <span style="font-size:64px;">&#x1F512;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Claude ke paas bhi security levels hain. Jaise office mein ID card ke levels!" &#x1F3E2;
+      </p>
+      <div class="grid grid-3" style="gap:16px;">
+        <div class="glass" style="padding:22px; border-color:rgba(6,182,212,0.3); text-align:center;">
+          <div style="font-size:48px; margin-bottom:8px;">&#x1F440;</div>
+          <h3 style="font-size:26px; color:var(--cyan);">Default</h3>
+          <p style="font-size:20px; color:var(--text-muted);">Sirf DEKHEGA, badlega nahi<br><span style="font-size:18px; color:rgba(255,255,255,0.3);">Tourist mode &#x1F4F7;</span></p>
+        </div>
+        <div class="glass" style="padding:22px; border-color:rgba(16,185,129,0.3); text-align:center;">
+          <div style="font-size:48px; margin-bottom:8px;">&#x270D;&#xFE0F;</div>
+          <h3 style="font-size:26px; color:var(--green);">Accept Edits</h3>
+          <p style="font-size:20px; color:var(--text-muted);">Dekhega + EDIT karega<br><span style="font-size:18px; color:rgba(255,255,255,0.3);">Employee mode &#x1F4BC;</span></p>
+        </div>
+        <div class="glass" style="padding:22px; border-color:rgba(249,115,22,0.3); text-align:center;">
+          <div style="font-size:48px; margin-bottom:8px;">&#x1F680;</div>
+          <h3 style="font-size:26px; color:var(--orange);">Auto</h3>
+          <p style="font-size:20px; color:var(--text-muted);">SAB KHUD karega<br><span style="font-size:18px; color:rgba(255,255,255,0.3);">Boss mode &#x1F451;</span></p>
+        </div>
+      </div>
+      <div class="glass" style="margin-top:20px; padding:18px; text-align:center; border-color:rgba(245,158,11,0.3);">
+        <p style="font-size:26px; color:#fcd34d; font-weight:700;">&#x2328; Shift+Tab se mode CHANGE karo session mein</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 3: RESUME SESSIONS -->
+  <div class="slide" id="slide-bp3">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">3</span>
+        <h2 style="font-size:56px; margin:0;">Session Resume <span style="font-size:64px;">&#x23F0;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Netflix pe show RESUME karte ho na? Claude mein bhi WAHI hota hai!" &#x1F4FA;
+      </p>
+      <div class="grid grid-2" style="gap:20px;">
+        <div class="glass" style="padding:24px; border-color:rgba(16,185,129,0.3);">
+          <div style="font-size:24px; line-height:2.2;">
+            <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:12px; margin-bottom:12px; font-family:monospace;">
+              <span style="color:#6ee7b7;">$</span> <span style="color:#fff;">claude --continue</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:22px;">&#x25B6; Last session WAHI se shuru</p>
+            <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:12px; margin:12px 0; font-family:monospace;">
+              <span style="color:#6ee7b7;">$</span> <span style="color:#fff;">claude --resume</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:22px;">&#x1F4CB; Sessions ki LIST dikhega, choose karo</p>
+            <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:12px; margin-top:12px; font-family:monospace;">
+              <span style="color:#6ee7b7;">$</span> <span style="color:#fff;">claude -n "seo-fix"</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:22px;">&#x1F3F7; Session ko NAAM do — baad mein dhundna easy</p>
+          </div>
+        </div>
+        <div class="glass" style="padding:24px; border-color:rgba(245,158,11,0.3); display:flex; flex-direction:column; justify-content:center; align-items:center;">
+          <div style="font-size:80px; margin-bottom:16px;">&#x1F4BE;</div>
+          <p style="font-size:28px; color:var(--yellow); font-weight:700; text-align:center;">Claude ko YAAD rehta hai!</p>
+          <p style="font-size:22px; color:var(--text-muted); text-align:center; margin-top:10px;">Kal kaam kiya? Aaj continue karo.<br>Jaise save game load karna &#x1F3AE;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 4: COMPACT & CLEAR -->
+  <div class="slide" id="slide-bp4">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">4</span>
+        <h2 style="font-size:56px; margin:0;">Clear &amp; Compact <span style="font-size:64px;">&#x1F9F9;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Claude ka dimag bhi BHAR jaata hai. Thoda saaf karo toh TEZ chalega!" &#x1F9E0;
+      </p>
+      <div class="grid grid-2" style="gap:20px;">
+        <div class="glass" style="padding:28px; border-color:rgba(6,182,212,0.3); text-align:center;">
+          <div style="font-size:60px; margin-bottom:12px;">&#x1F5D1;</div>
+          <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:16px; font-family:monospace; font-size:32px; color:#67e8f9; margin-bottom:12px;">
+            /clear
+          </div>
+          <p style="font-size:24px; color:var(--text-muted);">Naya kaam? Pehle <strong style="color:#fff;">SAAF</strong> karo<br><span style="font-size:20px; color:rgba(255,255,255,0.3);">Phone ki RAM clear karna &#x1F4F1;</span></p>
+        </div>
+        <div class="glass" style="padding:28px; border-color:rgba(16,185,129,0.3); text-align:center;">
+          <div style="font-size:60px; margin-bottom:12px;">&#x1F4E6;</div>
+          <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:16px; font-family:monospace; font-size:32px; color:#6ee7b7; margin-bottom:12px;">
+            /compact
+          </div>
+          <p style="font-size:24px; color:var(--text-muted);">Baat lambi ho gayi? <strong style="color:#fff;">SUMMARY</strong> banao<br><span style="font-size:20px; color:rgba(255,255,255,0.3);">WhatsApp chat ka TL;DR &#x1F4AC;</span></p>
+        </div>
+      </div>
+      <div class="glass" style="margin-top:20px; padding:16px; text-align:center; border-color:rgba(239,68,68,0.3);">
+        <p style="font-size:24px; color:#fca5a5;">&#x26A0; Har naye kaam se pehle <strong>/clear</strong> karo. Warna Claude CONFUSED hoga — jaise Monday subah boss ko Sunday ki baat yaad dilao!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 5: ACCEPT/REJECT CHANGES -->
+  <div class="slide" id="slide-bp5">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">5</span>
+        <h2 style="font-size:56px; margin:0;">Accept / Reject <span style="font-size:64px;">&#x1F44D;&#x1F44E;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Shaadi mein dulhan ke paas haan ya naa ka option hota hai. Claude mein bhi!" &#x1F490;
+      </p>
+      <div style="display:flex; gap:20px; justify-content:center;">
+        <div class="glass" style="padding:30px 40px; border-color:rgba(16,185,129,0.4); text-align:center; flex:1;">
+          <div style="font-size:80px; margin-bottom:12px;">&#x2705;</div>
+          <div style="font-size:48px; font-weight:900; color:var(--green); margin-bottom:8px;">Y</div>
+          <p style="font-size:24px; color:var(--text-muted);">ACCEPT<br><span style="font-size:20px;">Theek hai, lagao!</span></p>
+        </div>
+        <div class="glass" style="padding:30px 40px; border-color:rgba(239,68,68,0.4); text-align:center; flex:1;">
+          <div style="font-size:80px; margin-bottom:12px;">&#x274C;</div>
+          <div style="font-size:48px; font-weight:900; color:var(--red); margin-bottom:8px;">N</div>
+          <p style="font-size:24px; color:var(--text-muted);">REJECT<br><span style="font-size:20px;">Nahi chahiye, hatao!</span></p>
+        </div>
+        <div class="glass" style="padding:30px 40px; border-color:rgba(245,158,11,0.4); text-align:center; flex:1;">
+          <div style="font-size:80px; margin-bottom:12px;">&#x270F;&#xFE0F;</div>
+          <div style="font-size:48px; font-weight:900; color:var(--yellow); margin-bottom:8px;">E</div>
+          <p style="font-size:24px; color:var(--text-muted);">EDIT<br><span style="font-size:20px;">Thoda change karke lagao</span></p>
+        </div>
+      </div>
+      <div class="glass" style="margin-top:20px; padding:16px; text-align:center; border-color:rgba(99,102,241,0.3);">
+        <p style="font-size:24px; color:#a5b4fc;">&#x1F451; TUM BOSS ho. Claude suggest karta hai. TUM decide karte ho.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 6: KEYBOARD SHORTCUTS -->
+  <div class="slide" id="slide-bp6">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">6</span>
+        <h2 style="font-size:56px; margin:0;">Shortcuts <span style="font-size:64px;">&#x2328;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Gamer logon ko toh pata hai — shortcuts se SPEED badhti hai!" &#x1F3AE;
+      </p>
+      <div class="grid grid-2" style="gap:14px;">
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(99,102,241,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#a5b4fc; font-weight:700;">Shift+Tab</span>
+          <span style="font-size:22px; color:var(--text-muted);">Permission mode CHANGE karo</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(16,185,129,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#6ee7b7; font-weight:700;">Cmd+O</span>
+          <span style="font-size:22px; color:var(--text-muted);">FAST mode on/off &#x26A1;</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(6,182,212,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#67e8f9; font-weight:700;">Ctrl+C</span>
+          <span style="font-size:22px; color:var(--text-muted);">RUKO! Interrupt karo</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(236,72,153,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#f9a8d4; font-weight:700;">Esc Esc</span>
+          <span style="font-size:22px; color:var(--text-muted);">UNDO menu — wapas jao &#x23EA;</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(245,158,11,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#fcd34d; font-weight:700;">Ctrl+V</span>
+          <span style="font-size:22px; color:var(--text-muted);">IMAGE paste karo &#x1F5BC;</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:24px; background:rgba(249,115,22,0.3); padding:8px 16px; border-radius:8px; font-family:monospace; color:#fdba74; font-weight:700;">Cmd+P</span>
+          <span style="font-size:22px; color:var(--text-muted);">MODEL switch karo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 7: SLASH COMMANDS -->
+  <div class="slide" id="slide-bp7">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">7</span>
+        <h2 style="font-size:56px; margin:0;">Slash Commands <span style="font-size:64px;">&#x2F;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Jaise WhatsApp mein /status hota hai, Claude mein bhi slash commands hain!" &#x1F4AC;
+      </p>
+      <div class="grid grid-2" style="gap:14px;">
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#67e8f9; font-weight:700; min-width:140px;">/clear</span>
+          <span style="font-size:22px; color:var(--text-muted);">Saaf karo, naye kaam ke liye</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#6ee7b7; font-weight:700; min-width:140px;">/compact</span>
+          <span style="font-size:22px; color:var(--text-muted);">Summary banao, space bachao</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#f9a8d4; font-weight:700; min-width:140px;">/cost</span>
+          <span style="font-size:22px; color:var(--text-muted);">Kitna kharcha hua? &#x1F4B0;</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#fcd34d; font-weight:700; min-width:140px;">/plan</span>
+          <span style="font-size:22px; color:var(--text-muted);">Pehle SOCH, phir kar</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#fdba74; font-weight:700; min-width:140px;">/model</span>
+          <span style="font-size:22px; color:var(--text-muted);">Model switch karo</span>
+        </div>
+        <div class="glass-sm" style="padding:18px; display:flex; align-items:center; gap:14px;">
+          <span style="font-size:28px; font-family:monospace; color:#a5b4fc; font-weight:700; min-width:140px;">/effort</span>
+          <span style="font-size:22px; color:var(--text-muted);">Simple kaam = low, complex = max</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 8: @FILE REFERENCES -->
+  <div class="slide" id="slide-bp8">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">8</span>
+        <h2 style="font-size:56px; margin:0;">@File Se Point Karo <span style="font-size:64px;">&#x1F4C1;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Instagram pe @mention karte ho na? Claude mein files ko @mention karo!" &#x1F4F8;
+      </p>
+      <div class="glass" style="padding:28px; border-color:rgba(6,182,212,0.3); margin-bottom:20px;">
+        <div style="font-size:26px; line-height:2.2; font-family:monospace;">
+          <div><span style="color:var(--cyan);">&gt;</span> <span style="color:#fff;">@src/login.ts</span> <span style="color:var(--text-muted);">mein bug fix karo</span></div>
+          <div><span style="color:var(--cyan);">&gt;</span> <span style="color:#fff;">@package.json</span> <span style="color:var(--text-muted);">mein kya dependencies hain?</span></div>
+          <div><span style="color:var(--cyan);">&gt;</span> <span style="color:#fff;">@old.json</span> <span style="color:var(--text-muted);">aur</span> <span style="color:#fff;">@new.json</span> <span style="color:var(--text-muted);">compare karo</span></div>
+        </div>
+      </div>
+      <div class="glass" style="padding:18px; text-align:center; border-color:rgba(16,185,129,0.3);">
+        <p style="font-size:26px; color:#6ee7b7; font-weight:700;">&#x26A1; Claude ko DHUNDHNA nahi padega — seedha file pe le jao. 10x FAST!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 9: FAST MODE & EFFORT -->
+  <div class="slide" id="slide-bp9">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">9</span>
+        <h2 style="font-size:56px; margin:0;">Speed Control <span style="font-size:64px;">&#x1F3CE;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Gaadi mein gear hota hai na? Claude mein bhi SPEED control hai!" &#x1F697;
+      </p>
+      <div class="grid grid-2" style="gap:24px;">
+        <div class="glass" style="padding:28px; border-color:rgba(16,185,129,0.3); text-align:center;">
+          <div style="font-size:64px; margin-bottom:12px;">&#x26A1;</div>
+          <h3 style="font-size:32px; color:var(--green); margin-bottom:12px;">Fast Mode</h3>
+          <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:14px; font-family:monospace; font-size:26px; color:#6ee7b7; margin-bottom:12px;">
+            Cmd+O
+          </div>
+          <p style="font-size:22px; color:var(--text-muted);">Same quality, ZYADA speed<br><span style="font-size:18px; color:rgba(255,255,255,0.3);">Jaise Jio se 5G pe switch &#x1F4F6;</span></p>
+        </div>
+        <div class="glass" style="padding:28px; border-color:rgba(249,115,22,0.3); text-align:center;">
+          <div style="font-size:64px; margin-bottom:12px;">&#x1F9E0;</div>
+          <h3 style="font-size:32px; color:var(--orange); margin-bottom:12px;">Effort Level</h3>
+          <div style="background:rgba(0,0,0,0.5); border-radius:10px; padding:14px; font-family:monospace; font-size:26px; color:#fdba74; margin-bottom:12px;">
+            /effort low &nbsp;|&nbsp; /effort max
+          </div>
+          <p style="font-size:22px; color:var(--text-muted);">Simple kaam? Low. Mushkil? Max.<br><span style="font-size:18px; color:rgba(255,255,255,0.3);">AC ka temperature control &#x2744;</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BP 10: PIPE — CHAIN COMMANDS -->
+  <div class="slide" id="slide-bp10">
+    <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=1920&q=80&auto=format&fit=crop');"></div>
+    <div class="bg-mesh"></div>
+    <div class="slide-inner full" style="background:rgba(0,0,0,0.85); border-radius:20px; padding:40px;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <span style="font-size:56px; background:rgba(99,102,241,0.2); border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">10</span>
+        <h2 style="font-size:52px; margin:0;">Pro Tip: Pipe <span style="font-size:64px;">&#x1F9F1;</span></h2>
+      </div>
+      <p style="font-size:28px; color:var(--yellow); font-style:italic; margin-bottom:24px;">
+        "Ek command ka output SEEDHA Claude ko bhejo. Jaise relay race mein baton pass!" &#x1F3C3;
+      </p>
+      <div class="glass" style="padding:28px; border-color:rgba(6,182,212,0.3); margin-bottom:20px;">
+        <div style="font-size:24px; line-height:2.4; font-family:monospace;">
+          <div style="margin-bottom:8px;"><span style="color:rgba(255,255,255,0.3);"># Code review ek command mein</span></div>
+          <div><span style="color:#fcd34d;">git diff</span> <span style="color:#67e8f9;">|</span> <span style="color:#6ee7b7;">claude -p</span> <span style="color:#fff;">"review karo bugs ke liye"</span></div>
+          <div style="margin-top:16px; margin-bottom:8px;"><span style="color:rgba(255,255,255,0.3);"># Error log samjho</span></div>
+          <div><span style="color:#fcd34d;">cat error.log</span> <span style="color:#67e8f9;">|</span> <span style="color:#6ee7b7;">claude -p</span> <span style="color:#fff;">"kya crash hua?"</span></div>
+          <div style="margin-top:16px; margin-bottom:8px;"><span style="color:rgba(255,255,255,0.3);"># Codebase samjho ek line mein</span></div>
+          <div><span style="color:#6ee7b7;">claude -p</span> <span style="color:#fff;">"is project ka architecture samjhao"</span></div>
+        </div>
+      </div>
+      <div class="glass" style="padding:16px; text-align:center; border-color:rgba(16,185,129,0.3);">
+        <p style="font-size:24px; color:#6ee7b7; font-weight:700;">&#x1F4A1; <span style="color:#67e8f9;">|</span> matlab PIPE — ek ka output doosre ko dedo. POWER MOVE!</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== SLIDE 6: EVERY TEAM ==================== -->
   <div class="slide" id="slide-6">
     <div class="bg-mesh"></div>
@@ -1266,34 +1611,44 @@
 
     // Audio for each slide — mapped to slide order
     const slideAudio = [
-      'audio/slide-01.mp3', // 1 Hero
-      'audio/slide-02.mp3', // 2 Jargon
-      'audio/slide-03.mp3', // 3 Incidents
-      'audio/slide-04.mp3', // 4 Why Playbook
-      'audio/slide-05.mp3', // 5 What You Get
-      'audio/slide-5b.mp3', // 6 Skills Kya Hai
-      'audio/slide-5c.mp3', // 7 Skills Kaise Add
-      'audio/slide-5d.mp3', // 8 18 Skills List
-      'audio/slide-06.mp3', // 9 Every Team
-      'audio/slide-07.mp3', // 10 Already Shipped
-      'audio/slide-08.mp3', // 11 Slack Download
-      'audio/slide-09.mp3', // 12 Desktop Save
-      'audio/slide-10.mp3', // 13 Right Click
-      'audio/slide-11.mp3', // 14 Terminal
-      'audio/slide-12.mp3', // 15 Option 8
-      'audio/slide-13.mp3', // 16 Auto Install
-      'audio/slide-14.mp3', // 17 Paperclip Ready
-      'audio/slide-15.mp3', // 18 Setup Done
-      'audio/slide-16.mp3', // 19 Paperclip What
-      'audio/slide-17.mp3', // 20 Company
-      'audio/slide-18.mp3', // 21 Agent
-      'audio/slide-19.mp3', // 22 Task
-      'audio/slide-20.mp3', // 23 Agent Running
-      'audio/slide-21.mp3', // 24 Dashboard
-      'audio/slide-22.mp3', // 25 Use Cases
-      'audio/slide-23.mp3', // 26 Build Features
-      'audio/slide-24.mp3', // 27 Q&A
-      'audio/slide-25.mp3', // 28 Closing
+      'audio/slide-01.mp3',  // 1 Hero
+      'audio/slide-02.mp3',  // 2 Jargon
+      'audio/slide-03.mp3',  // 3 Incidents
+      'audio/slide-04.mp3',  // 4 Why Playbook
+      'audio/slide-05.mp3',  // 5 What You Get
+      'audio/slide-5b.mp3',  // 6 Skills Kya Hai
+      'audio/slide-5c.mp3',  // 7 Skills Kaise Add
+      'audio/slide-5d.mp3',  // 8 18 Skills List
+      'audio/slide-bp1.mp3', // 9 BP1: Talk Naturally
+      'audio/slide-bp2.mp3', // 10 BP2: Permission Modes
+      'audio/slide-bp3.mp3', // 11 BP3: Resume Sessions
+      'audio/slide-bp4.mp3', // 12 BP4: Clear & Compact
+      'audio/slide-bp5.mp3', // 13 BP5: Accept/Reject
+      'audio/slide-bp6.mp3', // 14 BP6: Shortcuts
+      'audio/slide-bp7.mp3', // 15 BP7: Slash Commands
+      'audio/slide-bp8.mp3', // 16 BP8: @File
+      'audio/slide-bp9.mp3', // 17 BP9: Speed Control
+      'audio/slide-bp10.mp3',// 18 BP10: Pipe
+      'audio/slide-06.mp3',  // 19 Every Team
+      'audio/slide-07.mp3',  // 20 Already Shipped
+      'audio/slide-08.mp3',  // 21 Slack Download
+      'audio/slide-09.mp3',  // 22 Desktop Save
+      'audio/slide-10.mp3',  // 23 Right Click
+      'audio/slide-11.mp3',  // 24 Terminal
+      'audio/slide-12.mp3',  // 25 Option 8
+      'audio/slide-13.mp3',  // 26 Auto Install
+      'audio/slide-14.mp3',  // 27 Paperclip Ready
+      'audio/slide-15.mp3',  // 28 Setup Done
+      'audio/slide-16.mp3',  // 29 Paperclip What
+      'audio/slide-17.mp3',  // 30 Company
+      'audio/slide-18.mp3',  // 31 Agent
+      'audio/slide-19.mp3',  // 32 Task
+      'audio/slide-20.mp3',  // 33 Agent Running
+      'audio/slide-21.mp3',  // 34 Dashboard
+      'audio/slide-22.mp3',  // 35 Use Cases
+      'audio/slide-23.mp3',  // 36 Build Features
+      'audio/slide-24.mp3',  // 37 Q&A
+      'audio/slide-25.mp3',  // 38 Closing
     ];
 
     function stopAudio() {
