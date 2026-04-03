@@ -1085,14 +1085,39 @@
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
     let current = 0;
+    let currentAudio = null;
+
+    // Audio for each slide
+    const slideAudio = [];
+    for (let i = 1; i <= totalSlides; i++) {
+      slideAudio.push('audio/slide-' + String(i).padStart(2, '0') + '.mp3');
+    }
+
+    function stopAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
+    function playSlideAudio(idx) {
+      stopAudio();
+      var src = slideAudio[idx];
+      if (!src) return;
+      currentAudio = new Audio(src);
+      currentAudio.play().catch(function(){});
+    }
 
     function showSlide(n) {
       if (n < 0 || n >= totalSlides) return;
+      stopAudio();
       slides[current].classList.remove('active');
       current = n;
       slides[current].classList.add('active');
       updateProgress();
       updateSlideNumber();
+      playSlideAudio(current);
     }
 
     function updateProgress() {
@@ -1115,6 +1140,12 @@
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault();
         prev();
+      } else if (e.key === 's' || e.key === 'S') {
+        playSlideAudio(current);
+        return;
+      } else if (e.key === 'm' || e.key === 'M') {
+        stopAudio();
+        return;
       } else if (e.key === 'Home') {
         e.preventDefault();
         showSlide(0);
