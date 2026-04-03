@@ -65,6 +65,17 @@
     .slide-inner.full {
       max-width: 100%;
       padding: 20px 40px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Screenshot slides: text fixed, image fills remaining */
+    .slide-inner.full > img {
+      flex: 1;
+      min-height: 0;
+      object-fit: contain;
+      object-position: center top;
     }
 
     .slide-bg {
