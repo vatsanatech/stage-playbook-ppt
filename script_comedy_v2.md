@@ -164,6 +164,53 @@
 
 ---
 
+### PAPERCLIP BEST PRACTICES (6 slides)
+
+### PBP 1: Company = Project
+> Har ALAG kaam ke liye ALAG company banao. Social media? Social Media company. Content? Content company. Sab mix mat karo. Phone mein alag folders jaise.
+
+---
+
+### PBP 2: Goal CLEAR Likho
+> GALAT: "Social media handle karo." SAHI: "Har naye show ke liye 5 platform posts banao — Instagram reel, Twitter thread, Facebook post, WhatsApp status, YouTube community." JITNA detail utna BETTER!
+
+---
+
+### PBP 3: Specialist Agents
+> Ek agent sab nahi kar sakta. Content Planner reels plan kare, Caption Writer hooks likhe, Trend Watcher viral track kare. Office mein alag departments jaise!
+
+---
+
+### PBP 4: Issues = Kaam Ki List
+> Issue 1: naye show ke liye 5 posts. Issue 2: trending reels ideas. Issue 3: competitor Instagram analyze. Issue 4: weekly engagement report. DETAIL mein likho!
+
+---
+
+### PBP 5: Dashboard ROZ Check
+> Jaise manager standup karta hai — tum bhi agents ka check karo. Approve ya reject. 5 minute daily.
+
+---
+
+### PBP 6: Agent Ko PERSONA Do ← SABSE POWERFUL
+> Tumhe kuch research nahi karni. Bas issue mein likho: "Mujhe ek investment expert agent chahiye. World leader ka persona leke aao." BAS ITNA!
+>
+> CEO agent KHUD karega:
+> 1. World mein top leaders dhundhega
+> 2. Unka persona analyze karega — kaise sochte, kya decide karte
+> 3. Us persona se NAYA agent CREATE karega
+> 4. Agent usi MINDSET se kaam karega!
+>
+> Example: "Best investor expert hire karo. World leader ka persona lo."
+> CEO → research → top investors analyze → persona banaye → agent create.
+> Ya likho "top 10 ka persona uthao" — 10 logon ka BEST MIX banayega.
+> Tumne ek line likhi. Agent ne sab kiya. GAME CHANGER!
+
+---
+
+### AUTORESEARCH + SEO PROOF (2 slides)
+
+---
+
 ### SLIDE 14: Q&A FINAL (pause)
 > Last round! Jaise KBC mein hota hai — "Koi aur sawaal?" Poocho, yeh mauka hai!
 
