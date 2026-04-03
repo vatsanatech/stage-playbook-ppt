@@ -1993,6 +1993,58 @@
     updateProgress();
     updateSlideNumber();
   </script>
+
+  <!-- Control bar -->
+  <div id="control-bar" style="
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 40px;
+    padding: 8px 20px;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    user-select: none;
+  ">
+    <div onclick="event.stopPropagation(); prev();" style="
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer;
+    " title="Previous">&#x23EA;</div>
+
+    <div id="play-btn" onclick="event.stopPropagation(); playSlideAudio(current);" style="
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(16,185,129,0.3); border: 1px solid rgba(16,185,129,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; cursor: pointer;
+    " title="Play audio (S)">&#x25B6;</div>
+
+    <div id="stop-btn" onclick="event.stopPropagation(); stopAudio();" style="
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer;
+    " title="Stop audio (M)">&#x23F9;</div>
+
+    <div onclick="event.stopPropagation(); next();" style="
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer;
+    " title="Next">&#x23E9;</div>
+
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4); border-left: 1px solid rgba(255,255,255,0.1); padding-left: 12px; margin-left: 4px; line-height: 1.5;">
+      &#x2190;&#x2192; navigate &nbsp;|&nbsp; S replay &nbsp;|&nbsp; M mute
+    </div>
+  </div>
+
 </body>
 
 </html>
