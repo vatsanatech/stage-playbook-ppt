@@ -1,1146 +1,1623 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STAGE Playbook + GSTACK</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAGE AI Playbook</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  :root {
-    --bg: #0a0a0a;
-    --text: #ffffff;
-    --text-muted: #a1a1aa;
-    --accent: #6366f1;
-    --accent2: #8b5cf6;
-    --green: #10b981;
-    --red: #ef4444;
-    --yellow: #f59e0b;
-    --cyan: #06b6d4;
-    --pink: #ec4899;
-  }
+    :root {
+      --bg: #0a0a0a;
+      --text: #ffffff;
+      --text-muted: #a1a1aa;
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --green: #10b981;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --cyan: #06b6d4;
+      --pink: #ec4899;
+      --orange: #f97316;
+    }
 
-  body {
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  .slide {
-    display: none;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .slide.active { display: flex; }
-
-  .slide-inner {
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 60px;
-    z-index: 2;
-    position: relative;
-  }
-
-  /* Full-bleed background images */
-  .slide-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-  }
-
-  .slide-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
-  /* Dark overlay variants */
-  .overlay-dark .slide-bg::after {
-    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(10,10,30,0.8) 50%, rgba(0,0,0,0.85) 100%);
-  }
-
-  .overlay-danger .slide-bg::after {
-    background: linear-gradient(135deg, rgba(30,0,0,0.88) 0%, rgba(40,5,5,0.82) 50%, rgba(20,0,0,0.88) 100%);
-  }
-
-  .overlay-success .slide-bg::after {
-    background: linear-gradient(135deg, rgba(0,20,10,0.88) 0%, rgba(0,30,20,0.82) 50%, rgba(0,15,10,0.88) 100%);
-  }
-
-  .overlay-purple .slide-bg::after {
-    background: linear-gradient(135deg, rgba(15,0,30,0.88) 0%, rgba(20,5,40,0.82) 50%, rgba(10,0,25,0.88) 100%);
-  }
-
-  .overlay-blue .slide-bg::after {
-    background: linear-gradient(135deg, rgba(0,5,20,0.88) 0%, rgba(5,10,35,0.82) 50%, rgba(0,5,15,0.88) 100%);
-  }
-
-  /* Subtle mesh on top of image */
-  .bg-mesh {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(99, 102, 241, 0.08), transparent),
-      radial-gradient(ellipse 60% 80% at 80% 60%, rgba(139, 92, 246, 0.06), transparent);
-    pointer-events: none;
-  }
-
-  /* Grid overlay */
-  .grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-    background-size: 60px 60px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .slide-number {
-    position: absolute;
-    bottom: 24px;
-    right: 36px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.3);
-    font-variant-numeric: tabular-nums;
-    z-index: 3;
-  }
-
-  /* Photo credit */
-  .photo-credit {
-    position: absolute;
-    bottom: 24px;
-    left: 36px;
-    font-size: 10px;
-    color: rgba(255,255,255,0.15);
-    z-index: 3;
-  }
-
-  /* Typography */
-  .hero-title {
-    font-size: 76px;
-    font-weight: 900;
-    letter-spacing: -3px;
-    line-height: 1.05;
-    background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #6366f1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
-  }
-
-  h2 {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .subtitle {
-    font-size: 22px;
-    color: var(--text-muted);
-    font-weight: 400;
-    line-height: 1.5;
-  }
-
-  .big-emoji {
-    font-size: 80px;
-    line-height: 1;
-    margin-bottom: 16px;
-    display: block;
-    filter: drop-shadow(0 0 30px rgba(99,102,241,0.3));
-  }
-
-  .mega-number {
-    font-size: 96px;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -4px;
-  }
-
-  /* Cards */
-  .glass {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 24px;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-
-  .glass-sm {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 18px;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  }
-
-  /* Incident cards */
-  .incident {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    border-radius: 16px;
-    padding: 22px;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .incident::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--red), var(--yellow));
-  }
-
-  .incident .icon { font-size: 36px; margin-bottom: 10px; display: block; }
-  .incident h4 { font-size: 16px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
-  .incident p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-  .incident .number {
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--red);
-    letter-spacing: -1px;
-  }
-
-  /* Fix cards */
-  .fix-card {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    border-radius: 16px;
-    padding: 22px;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .fix-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--green), var(--cyan));
-  }
-
-  .fix-card .icon { font-size: 36px; margin-bottom: 10px; display: block; }
-  .fix-card h4 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
-  .fix-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-
-  /* Milestone cards */
-  .milestone {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 22px;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  }
-
-  .milestone::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-  }
-
-  .milestone .icon { font-size: 40px; margin-bottom: 10px; display: block; }
-  .milestone h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .milestone p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-
-  /* Layout helpers */
-  .grid { display: grid; gap: 16px; }
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-  .flex { display: flex; gap: 16px; }
-  .flex-center { align-items: center; justify-content: center; }
-  .text-center { text-align: center; }
-
-  /* Tags */
-  .pill {
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 3px;
-  }
-
-  .pill-accent { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.3); }
-  .pill-green { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
-  .pill-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
-  .pill-yellow { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.3); }
-  .pill-cyan { background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
-
-  /* Terminal */
-  .terminal {
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 20px 24px;
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
-    font-size: 14px;
-    line-height: 1.8;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-
-  .terminal .prompt { color: var(--cyan); }
-  .terminal .comment { color: #52525b; }
-  .terminal .success { color: var(--green); }
-  .terminal .highlight { color: var(--yellow); }
-
-  /* Flow arrows */
-  .flow-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 12px 0;
-  }
-
-  .flow-chip {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 8px 18px;
-    border-radius: 100px;
-    font-size: 14px;
-    font-weight: 600;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .flow-arr { color: rgba(255,255,255,0.2); font-size: 20px; }
-
-  /* Project list */
-  .proj {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    margin-bottom: 8px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .proj .emoji { font-size: 28px; }
-  .proj .name { font-weight: 700; font-size: 17px; min-width: 170px; }
-  .proj .desc { color: var(--text-muted); font-size: 14px; }
-
-  /* Stat card */
-  .stat-card {
-    text-align: center;
-    padding: 24px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  }
-
-  .stat-card .num {
-    font-size: 56px;
-    font-weight: 900;
-    letter-spacing: -2px;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-
-  .stat-card .label { font-size: 14px; color: var(--text-muted); }
-
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  @keyframes bgZoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.05); }
-  }
-
-  .slide.active .slide-bg {
-    animation: bgZoom 20s ease-out forwards;
-  }
-
-  .slide.active .slide-inner > * {
-    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  .slide.active .slide-inner > *:nth-child(1) { animation-delay: 0s; }
-  .slide.active .slide-inner > *:nth-child(2) { animation-delay: 0.1s; }
-  .slide.active .slide-inner > *:nth-child(3) { animation-delay: 0.2s; }
-  .slide.active .slide-inner > *:nth-child(4) { animation-delay: 0.3s; }
-  .slide.active .slide-inner > *:nth-child(5) { animation-delay: 0.4s; }
-
-  .pulse { animation: pulse 2s ease-in-out infinite; }
-  .float { animation: float 3s ease-in-out infinite; }
-
-  /* Glow effects */
-  .glow-green { text-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
-  .glow-red { text-shadow: 0 0 40px rgba(239, 68, 68, 0.4); }
-  .glow-accent { text-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
-
-  .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-green {
-    background: linear-gradient(135deg, #10b981, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-red {
-    background: linear-gradient(135deg, #ef4444, #f59e0b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Quote */
-  .quote-box {
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 4px solid var(--accent);
-    border-radius: 0 12px 12px 0;
-    padding: 16px 24px;
-    margin-top: 16px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  .quote-box p {
-    font-size: 18px;
-    font-style: italic;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  /* Progress bar */
-  .progress {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--pink));
-    transition: width 0.4s ease;
-    z-index: 10;
-  }
-
-  /* Print styles */
-  @media print {
-    body { overflow: visible; }
-    .slide {
-      display: flex !important;
-      page-break-after: always;
-      page-break-inside: avoid;
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
       height: 100vh;
       width: 100vw;
     }
-    .slide.active .slide-inner > * { animation: none; }
-    .slide.active .slide-bg { animation: none; }
-    .slide:last-child { page-break-after: auto; }
-    .pulse, .float { animation: none; }
-  }
-</style>
+
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 60px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .slide-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .overlay-dark .slide-bg::after {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.88) 0%, rgba(10, 10, 30, 0.83) 50%, rgba(0, 0, 0, 0.88) 100%);
+    }
+
+    .overlay-danger .slide-bg::after {
+      background: linear-gradient(135deg, rgba(30, 0, 0, 0.9) 0%, rgba(40, 5, 5, 0.85) 50%, rgba(20, 0, 0, 0.9) 100%);
+    }
+
+    .overlay-success .slide-bg::after {
+      background: linear-gradient(135deg, rgba(0, 20, 10, 0.9) 0%, rgba(0, 30, 20, 0.85) 50%, rgba(0, 15, 10, 0.9) 100%);
+    }
+
+    .overlay-purple .slide-bg::after {
+      background: linear-gradient(135deg, rgba(15, 0, 30, 0.9) 0%, rgba(20, 5, 40, 0.85) 50%, rgba(10, 0, 25, 0.9) 100%);
+    }
+
+    .overlay-blue .slide-bg::after {
+      background: linear-gradient(135deg, rgba(0, 5, 20, 0.9) 0%, rgba(5, 10, 35, 0.85) 50%, rgba(0, 5, 15, 0.9) 100%);
+    }
+
+    .overlay-orange .slide-bg::after {
+      background: linear-gradient(135deg, rgba(30, 15, 0, 0.9) 0%, rgba(40, 20, 5, 0.85) 50%, rgba(25, 10, 0, 0.9) 100%);
+    }
+
+    .bg-mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(99, 102, 241, 0.08), transparent),
+        radial-gradient(ellipse 60% 80% at 80% 60%, rgba(139, 92, 246, 0.06), transparent);
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 999;
+      transition: width 0.4s ease;
+    }
+
+    .slide-number {
+      position: absolute;
+      bottom: 24px;
+      right: 36px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.3);
+      font-variant-numeric: tabular-nums;
+      z-index: 3;
+    }
+
+    .photo-credit {
+      position: absolute;
+      bottom: 24px;
+      left: 36px;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.15);
+      z-index: 3;
+    }
+
+    /* Typography */
+    .hero-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 50%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 22px;
+      color: var(--text-muted);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .big-emoji {
+      font-size: 72px;
+      line-height: 1;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3));
+    }
+
+    .mega-number {
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #a5b4fc, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-green {
+      background: linear-gradient(135deg, #6ee7b7, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-red {
+      background: linear-gradient(135deg, #fca5a5, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-cyan {
+      background: linear-gradient(135deg, #67e8f9, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-orange {
+      background: linear-gradient(135deg, #fdba74, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Cards */
+    .glass {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .glass-sm {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 18px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .flex {
+      display: flex;
+      gap: 24px;
+    }
+
+    /* Pills */
+    .pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 2px;
+    }
+
+    .pill-accent {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .pill-cyan {
+      background: rgba(6, 182, 212, 0.2);
+      color: #67e8f9;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .pill-yellow {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .pill-red {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .pill-orange {
+      background: rgba(249, 115, 22, 0.2);
+      color: #fdba74;
+      border: 1px solid rgba(249, 115, 22, 0.3);
+    }
+
+    .pill-pink {
+      background: rgba(236, 72, 153, 0.2);
+      color: #f9a8d4;
+      border: 1px solid rgba(236, 72, 153, 0.3);
+    }
+
+    /* Problem cards */
+    .problem-card {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .problem-card h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #fca5a5;
+    }
+
+    .problem-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Fix cards */
+    .fix-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .fix-card h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: #6ee7b7;
+    }
+
+    .fix-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Path cards */
+    .path-card {
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transition: transform 0.3s;
+      cursor: default;
+    }
+
+    .path-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .path-a {
+      background: rgba(99, 102, 241, 0.1);
+      border: 2px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .path-b {
+      background: rgba(16, 185, 129, 0.1);
+      border: 2px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Terminal */
+    .terminal {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 15px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .terminal .prompt {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .terminal .comment {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .terminal .highlight {
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .terminal .success {
+      color: var(--green);
+    }
+
+    /* Tool card */
+    .tool-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .tool-card .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .tool-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .tool-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Skill row */
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .skill-row .emoji {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .skill-row .name {
+      font-weight: 700;
+      font-size: 15px;
+      min-width: 140px;
+    }
+
+    .skill-row .desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Project row */
+    .proj {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+
+    .proj .emoji {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .proj .name {
+      font-weight: 700;
+      font-size: 16px;
+      min-width: 180px;
+    }
+
+    .proj .desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Stat card */
+    .stat-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 36px;
+      font-weight: 900;
+    }
+
+    .stat-card .label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Section divider */
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section-label-purple {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .section-label-green {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+    }
+
+    .section-label-orange {
+      background: rgba(249, 115, 22, 0.2);
+      color: #fdba74;
+    }
+
+    /* Animation */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.6;
+      }
+    }
+
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* VS divider */
+    .vs-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.2);
+      padding: 0 16px;
+    }
+
+    /* Agent card for slide 6 */
+    .agent-card {
+      background: rgba(249, 115, 22, 0.08);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+    }
+
+    .agent-card .icon {
+      font-size: 44px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .agent-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+      color: #fdba74;
+    }
+
+    .agent-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .badge-powerful {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Milestone card for slide 7 */
+    .milestone-card {
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .milestone-card .icon {
+      font-size: 44px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .milestone-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+      color: #c4b5fd;
+    }
+
+    .milestone-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="progress" id="progress"></div>
+  <div class="progress" id="progress"></div>
 
-<!-- ==================== SLIDE 1: HERO ==================== -->
-<div class="slide active overlay-dark" id="slide-1">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner text-center">
-    <div class="big-emoji float">&#x1F680;</div>
-    <div class="hero-title">STAGE Playbook<br>+ GSTACK</div>
-    <p class="subtitle" style="max-width: 820px; margin: 0 auto; font-size: 18px; line-height: 1.7;">Multiple repos, low efficiency, no standardized AI workflows &mdash; bugs slip through, effort gets duplicated, knowledge stays siloed.<br><strong style="color: #fff;">One playbook keeps every AI-native team aligned.</strong></p>
-    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap;">
-      <span class="pill pill-accent">Flutter</span>
-      <span class="pill pill-green">Next.js</span>
-      <span class="pill pill-cyan">Node.js</span>
-      <span class="pill pill-yellow">Design</span>
-      <span class="pill pill-red">Marketing</span>
-      <span class="pill pill-accent">Analytics</span>
+
+  <!-- ==================== SLIDE 1: HERO ==================== -->
+  <div class="slide active overlay-dark" id="slide-1">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <p style="color: rgba(255,255,255,0.3); margin-top: 20px; font-size: 14px;">STAGE Team &middot; March 2026</p>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float">&#x1F680;</div>
+      <div class="hero-title">Claude use kar rahe ho?<br>Ab <span class="gradient-text">UPGRADE</span></div>
+      <p class="subtitle" style="max-width: 820px; margin: 0 auto; font-size: 22px; line-height: 1.7;">
+        STAGE AI Playbook &mdash; Ek command mein <strong style="color: #fff;">poori taaqat unlock</strong>
+      </p>
+      <div style="display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap;">
+        <span class="pill pill-accent" style="font-size: 14px; padding: 6px 16px;">50+ Skills</span>
+        <span class="pill pill-green" style="font-size: 14px; padding: 6px 16px;">Every Team</span>
+        <span class="pill pill-cyan" style="font-size: 14px; padding: 6px 16px;">AI Agents</span>
+        <span class="pill pill-red" style="font-size: 14px; padding: 6px 16px;">Safety Built-In</span>
+      </div>
+      <p style="color: rgba(255,255,255,0.4); margin-top: 32px; font-size: 16px;">April 2026</p>
+    </div>
+    <div class="slide-number">1 / 15</div>
   </div>
-  <div class="slide-number">1 / 10</div>
-  <div class="photo-credit">Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 2: THE HORROR ==================== -->
-<div class="slide overlay-danger" id="slide-2">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <span class="big-emoji" style="font-size: 60px;">&#x1F631;</span>
-      <h2><span class="gradient-red">Real Bugs. Real Production.</span></h2>
-      <p class="subtitle" style="font-size: 18px;">These actually happened at STAGE. No names, just pain.</p>
+  <!-- ==================== SLIDE 2: JARGON BUSTER ==================== -->
+  <div class="slide overlay-purple" id="slide-2">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <div class="grid grid-2">
-      <div class="incident">
-        <span class="icon">&#x1F4C4;</span>
-        <h4>The 18K-Line CSV</h4>
-        <div class="number pulse">18,000 lines</div>
-        <p>A raw CSV file pushed straight to the repo. Bloated every git clone. Stuck in history forever.</p>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <span style="font-size: 40px;">&#x1F4DA;</span>
+        <h2 style="font-size: 42px;">Pehle Kuch <span class="gradient-text">Basic Terms</span> Samjh Lo</h2>
+        <p style="font-size: 16px; color: var(--text-muted);">Aage ke slides mein yeh words aayenge. 30 second mein yaad
+          kar lo!</p>
       </div>
-      <div class="incident">
-        <span class="icon">&#x1F4A3;</span>
-        <h4>We DDoS'd Ourselves</h4>
-        <div class="number pulse">cacheTimeout: 0</div>
-        <p>Cache TTL set to zero in a PR. Every page load hit <strong>getDialect</strong> on the backend. Backend got crushed. The whole platform slowed down.</p>
+      <div class="grid grid-2" style="gap: 12px;">
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F4C1;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #a5b4fc; margin-bottom: 4px;">Repo (Repository)</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Ek <strong
+                style="color: #fff;">folder</strong> jismein poora project ka code hota hai. Jaise ek Google Drive
+              folder &mdash; lekin code ke liye.</p>
+          </div>
+        </div>
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F333;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #6ee7b7; margin-bottom: 4px;">Branch</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Ek <strong
+                style="color: #fff;">copy</strong> jismein tum changes karo, original safe rahe. Jaise doc ka "Make a
+              Copy" &mdash; edit karo bina original tode.</p>
+          </div>
+        </div>
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F4E5;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #67e8f9; margin-bottom: 4px;">Git Clone</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Kisi ka repo <strong
+                style="color: #fff;">download</strong> karna apne laptop pe. Jaise Google Drive se folder download
+              karna.</p>
+          </div>
+        </div>
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F4DD;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #fcd34d; margin-bottom: 4px;">PR (Pull Request)</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Tum bolo <strong
+                style="color: #fff;">"yeh changes dekh lo, theek hai toh merge kar do"</strong>. Approval lena before
+              changes go live.</p>
+          </div>
+        </div>
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F4A5;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #fca5a5; margin-bottom: 4px;">DDoS</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Server pe itne requests aa jayein ki
+              woh <strong style="color: #fff;">crash</strong> ho jaaye. Jaise ek dukaan mein ek saath 10 lakh log ghus
+              jayein.</p>
+          </div>
+        </div>
+        <div class="glass-sm" style="display: flex; align-items: flex-start; gap: 12px;">
+          <span style="font-size: 28px; flex-shrink: 0;">&#x1F916;</span>
+          <div>
+            <h3 style="font-size: 16px; color: #fdba74; margin-bottom: 4px;">AI Agent</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Ek AI jo <strong
+                style="color: #fff;">khud kaam karta hai</strong> bina aapke. Jaise ek employee jo raat bhar kaam kare,
+              subah report de.</p>
+          </div>
+        </div>
       </div>
-      <div class="incident">
-        <span class="icon">&#x1F575;</span>
-        <h4>The Config Smuggler</h4>
-        <div class="number pulse">4 hidden changes</div>
-        <p>PR said "Feature X" but also changed middleware, dynamic routing, and TypeScript config &mdash; just to make CI pass. Got merged.</p>
-      </div>
-      <div class="incident">
-        <span class="icon">&#x1F47B;</span>
-        <h4>The Ghost Branch</h4>
-        <div class="number pulse">1,00,000+ lines</div>
-        <p>PR raised against a months-old branch. The diff? Over 1 lakh lines. Unreviewable. Almost merged.</p>
+      <div class="glass text-center" style="margin-top: 12px; padding: 10px; border-color: rgba(99,102,241,0.3);">
+        <p style="font-size: 14px; color: var(--text-muted);">&#x1F4A1; Bas itna yaad rakhna hai. Baaki sab AI
+          samjhayega!</p>
       </div>
     </div>
+    <div class="slide-number">2 / 15</div>
   </div>
-  <div class="slide-number">2 / 10</div>
-  <div class="photo-credit">Photo: Taylor Vick / Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 3: SETUP HELL ==================== -->
-<div class="slide overlay-danger" id="slide-3">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div class="flex" style="align-items: center; gap: 48px;">
-      <div style="flex: 1;">
-        <span class="big-emoji" style="font-size: 64px;">&#x1F92F;</span>
-        <h2>Meanwhile, New Joiners...</h2>
-        <p class="subtitle" style="font-size: 18px; margin-bottom: 20px;">
-          Every new dev went through the same nightmare. Especially non-mobile devs trying to work on Flutter.
-        </p>
-        <div class="incident" style="margin-bottom: 12px;">
-          <span class="icon" style="font-size: 28px;">&#x2615;</span>
-          <h4>Wrong JDK Version</h4>
-          <p>Downloaded JDK 21 when we needed 17. Two hours gone debugging "unsupported class version" errors.</p>
+  <!-- ==================== SLIDE 3: REAL INCIDENTS ==================== -->
+  <div class="slide overlay-danger" id="slide-2">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="big-emoji" style="font-size: 56px;">&#x1F6A8;</span>
+        <h2>Yeh <span class="gradient-red">ACTUALLY</span> Hua Hai STAGE Mein</h2>
+      </div>
+      <div class="grid grid-2" style="gap: 16px;">
+        <div class="problem-card">
+          <h4>&#x1F4C4; 18K-Line CSV</h4>
+          <div class="mega-number gradient-red" style="font-size: 48px; margin: 8px 0;">18,000</div>
+          <p>Lines push kar di repo mein. Ab git clone FOREVER slow. Kabhi fix nahi hoga.</p>
         </div>
-        <div class="incident" style="margin-bottom: 12px;">
-          <span class="icon" style="font-size: 28px;">&#x1F4BB;</span>
-          <h4>Wrong Android Studio</h4>
-          <p>Installed the latest Android Studio &mdash; incompatible with our Gradle version. Another afternoon wasted.</p>
+        <div class="problem-card">
+          <h4>&#x1F4A5; We DDoS'd Ourselves</h4>
+          <div class="mega-number gradient-red" style="font-size: 48px; margin: 8px 0;">0 sec</div>
+          <p>Cache timeout ZERO. Har page load seedha backend pe. Poora platform CRUSH.</p>
         </div>
-        <div class="incident">
-          <span class="icon" style="font-size: 28px;">&#x23F3;</span>
-          <h4>No Standard Process</h4>
-          <p>Every dev figured it out on their own. Asked around on Slack. Copied random configs. Nothing was consistent.</p>
+        <div class="problem-card">
+          <h4>&#x1F575;&#xFE0F; Config Smuggler</h4>
+          <div class="mega-number gradient-red" style="font-size: 48px; margin: 8px 0;">3 hidden</div>
+          <p>PR title tha "feature X". Andar chhupe the middleware + routing + config changes. MERGED.</p>
+        </div>
+        <div class="problem-card">
+          <h4>&#x1F47B; Ghost Branch</h4>
+          <div class="mega-number gradient-red" style="font-size: 48px; margin: 8px 0;">1 Lakh+</div>
+          <p>Lines ka PR. Months purani branch. Review IMPOSSIBLE. Almost merge ho gayi.</p>
         </div>
       </div>
-      <div style="flex: 0 0 340px; text-align: center;">
-        <div class="glass" style="padding: 30px;">
-          <div style="font-size: 100px; margin-bottom: 16px;">&#x1F6D1;</div>
-          <div class="mega-number gradient-red" style="font-size: 64px;">Hours</div>
-          <p style="color: var(--text-muted); font-size: 16px; margin-top: 8px;">wasted per developer<br>on environment setup</p>
-          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
-            <p style="font-size: 13px; color: var(--text-muted);">Non-core mobile devs had it worst &mdash; they just needed to make one small change</p>
+    </div>
+    <div class="slide-number">3 / 15</div>
+  </div>
+
+  <!-- ==================== SLIDE 3: WHY PLAYBOOK ==================== -->
+  <div class="slide overlay-danger" id="slide-3">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2>Sab Claude Use Karte Hain, Lekin <span class="gradient-red">ALAG ALAG</span></h2>
+      </div>
+      <div class="flex" style="align-items: stretch;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 14px;">
+          <div class="problem-card">
+            <h4>&#x2753; Kisi ke paas naye skills, kisi ke paas nahi</h4>
+            <p>Kuch log 20x fast hain, kuch purane tarike se kaam kar rahe hain</p>
+          </div>
+          <div class="problem-card">
+            <h4>&#x2753; Naya skill add hota hai &mdash; kisiko pata nahi chalta</h4>
+            <p>Hum update karte hain, lekin koi use hi nahi karta</p>
+          </div>
+          <div class="problem-card">
+            <h4>&#x2753; Koi manually likh raha, koi AI se &mdash; inconsistent</h4>
+            <p>Same kaam, alag quality, alag speed</p>
+          </div>
+        </div>
+        <div style="flex: 1; display: flex; align-items: center;">
+          <div class="glass" style="border-color: rgba(16,185,129,0.3); width: 100%;">
+            <div style="text-align: center;">
+              <span style="font-size: 48px; display: block; margin-bottom: 12px;">&#x2705;</span>
+              <h3 style="color: #6ee7b7; font-size: 22px; margin-bottom: 12px;">Playbook Fix</h3>
+              <p style="font-size: 18px; color: var(--text-muted); line-height: 1.6;">
+                EK jagah, <strong style="color: #fff;">SAME tools</strong>,<br>
+                <strong style="color: #6ee7b7;">SABKO</strong> milte hain.<br><br>
+                Naya skill aaye? <strong style="color: #fff;">SABKO</strong> mil jaaye.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="slide-number">4 / 15</div>
   </div>
-  <div class="slide-number">3 / 10</div>
-  <div class="photo-credit">Photo: Jefferson Santos / Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 4: THE FIX ==================== -->
-<div class="slide overlay-success" id="slide-4">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner text-center">
-    <span class="big-emoji float" style="font-size: 64px;">&#x2728;</span>
-    <h2>One Command Fixes Everything</h2>
-    <div style="display: inline-block; background: rgba(0,0,0,0.6); border: 1px solid rgba(6,182,212,0.4); border-radius: 16px; padding: 20px 48px; margin: 16px 0; box-shadow: 0 0 40px rgba(6,182,212,0.15);">
-      <span style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 36px; color: #67e8f9; font-weight: 700;">./setup.sh</span>
+  <!-- ==================== SLIDE 4: Q&A BREAK 1 ==================== -->
+  <div class="slide overlay-purple" id="slide-4">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <p class="subtitle" style="font-size: 18px; max-width: 700px; margin: 16px auto 24px;">
-      Installs the right JDK, right Android Studio, right Flutter SDK, Claude Code, and GSTACK's 9 AI skills &mdash; across every project. Automatically.
-    </p>
-    <div class="grid grid-4" style="max-width: 800px; margin: 0 auto;">
-      <div class="glass-sm text-center">
-        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F4F1;</div>
-        <div style="font-weight: 700; font-size: 14px;">Mobile App</div>
-      </div>
-      <div class="glass-sm text-center">
-        <div style="font-size: 32px; margin-bottom: 6px;">&#x26A1;</div>
-        <div style="font-weight: 700; font-size: 14px;">Express Backend</div>
-      </div>
-      <div class="glass-sm text-center">
-        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F3D7;</div>
-        <div style="font-weight: 700; font-size: 14px;">Nest Backend</div>
-      </div>
-      <div class="glass-sm text-center">
-        <div style="font-size: 32px; margin-bottom: 6px;">&#x1F310;</div>
-        <div style="font-weight: 700; font-size: 14px;">STAGE Web App</div>
-      </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float" style="font-size: 120px;">&#x2753;</div>
+      <h2 style="font-size: 56px;">Koi Sawaal?</h2>
+      <p class="subtitle" style="font-size: 22px; margin-top: 16px;">Problems ke baare mein kuch poochna hai?</p>
+      <p style="color: rgba(255,255,255,0.3); margin-top: 32px; font-size: 16px;">Hum yahaan hain &mdash; poochiye!</p>
     </div>
+    <div class="slide-number">5 / 15</div>
   </div>
-  <div class="slide-number">4 / 10</div>
-  <div class="photo-credit">Photo: Adi Goldstein / Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 5: GSTACK CATCHES EVERYTHING ==================== -->
-<div class="slide overlay-success" id="slide-5">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 20px;">
-      <span style="font-size: 48px;">&#x1F6E1;</span>
-      <h2>Every Incident? <span class="gradient-green">GSTACK Catches It.</span></h2>
+  <!-- ==================== SLIDE 5: WHAT YOU GET ==================== -->
+  <div class="slide overlay-success" id="slide-5">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <div class="grid grid-2" style="gap: 12px;">
-      <div class="incident" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F4C4; 18K CSV in the repo</h4>
-        <p>Giant file bloating git history</p>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2>Playbook Mein <span class="gradient-green">Kya Milta Hai?</span></h2>
       </div>
-      <div class="fix-card" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F6E1; /review flags large files</h4>
-        <p>Diff analysis catches anything that doesn't belong. PR blocked before merge.</p>
-      </div>
-      <div class="incident" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F4A3; cacheTimeout: 0 &mdash; backend crushed</h4>
-        <p>Every SSR request hammered backend</p>
-      </div>
-      <div class="fix-card" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F6E1; /plan-eng-review catches performance</h4>
-        <p>Architecture gate detects cache config changes and analyzes blast radius.</p>
-      </div>
-      <div class="incident" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F575; Config changes smuggled into feature PR</h4>
-        <p>Middleware + routing + tsconfig altered</p>
-      </div>
-      <div class="fix-card" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F6E1; /review detects scope creep</h4>
-        <p>Files outside the feature's scope get flagged. Unrelated config changes = rejected.</p>
-      </div>
-      <div class="incident" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F47B; PR against ancient branch &mdash; 100K+ lines</h4>
-        <p>Months of drift, unreviewable diff</p>
-      </div>
-      <div class="fix-card" style="padding: 16px;">
-        <h4 style="font-size: 13px;">&#x1F6E1; /ship checks branch freshness</h4>
-        <p>Detects stale base branches. Prompts rebase before allowing merge.</p>
-      </div>
-    </div>
-  </div>
-  <div class="slide-number">5 / 10</div>
-  <div class="photo-credit">Photo: Markus Spiske / Unsplash</div>
-</div>
-
-<!-- ==================== SLIDE 6: MILESTONES ==================== -->
-<div class="slide overlay-purple" id="slide-6">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1517948430535-1e2469d314fe?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <span style="font-size: 48px;">&#x1F3C6;</span>
-      <h2>What We've <span class="gradient-text">Already Shipped</span></h2>
-    </div>
-    <div class="grid grid-3" style="max-width: 900px; margin: 0 auto;">
-      <div class="milestone">
-        <span class="icon">&#x1F3DB;</span>
-        <h4>Code Review Council</h4>
-        <p><strong style="color: #a5b4fc;">5 AI personas</strong> + Chairman + Judge across all 4 repos. Runs automatically on every PR via GitHub Actions.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x1F9E0;</span>
-        <h4>Auto Knowledge Base</h4>
-        <p>Automated knowledge base updates across all repos. Continuous learning &mdash; the system gets <strong style="color: #a5b4fc;">smarter with every commit</strong>.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x2699;</span>
-        <h4>Standardized Everything</h4>
-        <p>Master scripts, Claude configs, Flutter custom skills &mdash; <strong style="color: #a5b4fc;">identical across all repos</strong>.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x1F527;</span>
-        <h4>Auto PR from Datadog</h4>
-        <p>Datadog errors detected in production &rarr; <strong style="color: #a5b4fc;">fix PR auto-generated</strong>. Humans review, not write.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x1F4F1;</span>
-        <h4>Correct Toolchain</h4>
-        <p>Right JDK. Right Android Studio. Right Flutter SDK. <strong style="color: #a5b4fc;">Minutes, not hours</strong> to set up.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x1F680;</span>
-        <h4>GSTACK Across 4 Repos</h4>
-        <p>9 core AI skills deployed to <strong style="color: #a5b4fc;">all 4 repositories</strong>. Every dev has AI superpowers from day one.</p>
-      </div>
-      <div class="milestone">
-        <span class="icon">&#x1F4AC;</span>
-        <h4>Slack Channel Bugs to PR</h4>
-        <p>Bugs reported in Slack channels &rarr; <strong style="color: #a5b4fc;">auto-converted to PRs</strong>. No manual ticket creation needed.</p>
-      </div>
-    </div>
-  </div>
-  <div class="slide-number">6 / 10</div>
-  <div class="photo-credit">Unsplash</div>
-</div>
-
-<!-- ==================== SLIDE 7: GSTACK OVERVIEW ==================== -->
-<div class="slide overlay-purple" id="slide-7">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1674027444485-cec3da58eef4?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 16px;">
-      <span style="font-size: 48px;">&#x1F916;</span>
-      <h2>GSTACK &mdash; <span class="gradient-text">Your AI Team</span></h2>
-      <p style="font-size: 17px; color: var(--text-muted);">
-        Built by <strong style="color: #fff;">Garry Tan</strong> (YC President &amp; CEO) from his daily coding practice.
-        <strong style="color: #a5b4fc;">9 specialist roles</strong> as slash commands. <strong style="color: #fcd34d;">16,000+ GitHub stars</strong>.
-      </p>
-      <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px; font-style: italic;">
-        "Planning is not review. Review is not shipping. Founder taste is not engineering rigor."
-      </p>
-    </div>
-    <div style="text-align: center; margin-bottom: 16px;">
-      <p style="font-size: 12px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">The GSTACK Workflow</p>
-      <div class="flow-row" style="justify-content: center;">
-        <span class="flow-chip">&#x1F4A1; Vision</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F3D7; Design</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F528; Build</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F50D; Audit</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F680; Release</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F9EA; QA</span><span class="flow-arr">&rarr;</span>
-        <span class="flow-chip">&#x1F4CA; Reflect</span>
-      </div>
-    </div>
-    <div class="grid grid-3">
-      <div class="glass text-center">
-        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F4A1;</div>
-        <h3 style="font-size: 16px; color: var(--cyan);">Vision &amp; Design</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Validate the problem, lock the architecture</p>
-        <div style="margin-top: 6px;">
-          <span class="pill pill-cyan">/plan-ceo-review</span>
-          <span class="pill pill-cyan">/plan-eng-review</span>
+      <div class="grid grid-3" style="gap: 16px; margin-bottom: 16px;">
+        <div class="tool-card">
+          <span class="icon">&#x1F9E0;</span>
+          <h3>Gstack</h3>
+          <span class="pill pill-accent">25+ Skills</span>
+          <p style="margin-top: 8px;">Planning, review, QA, security, design, deployment &mdash; sab ek jagah</p>
+        </div>
+        <div class="tool-card">
+          <span class="icon">&#x1F4E6;</span>
+          <h3>18 Skill Packs</h3>
+          <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center;">
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4F1; Mobile App (49 skills)</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F525; App Backend</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F310; Website Builder</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F3A8; UI Components</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4B3; Payments</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F41B; Error Tracking</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4BE; Database</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x2728; UI/UX Design</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F3A8; Frontend Design</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4AA; Coding Superpowers</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4C4; PDF Generator</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4CA; Presentation Maker</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4E3; Marketing</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F4CB; Product Management</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F9EA; Skill Creator</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F310; AI Web Browser</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x26A1; Fast Data Store</span>
+            <span class="pill pill-green" style="font-size: 10px;">&#x1F5BC; Beautiful Components</span>
+          </div>
+        </div>
+        <div class="tool-card">
+          <span class="icon">&#x1F3A8;</span>
+          <h3>/stage-designer</h3>
+          <span class="pill pill-pink">STAGE Design System</span>
+          <p style="margin-top: 8px;">Claude STAGE ka designer ban jaata hai. Colors, fonts, spacing sab jaanta hai</p>
         </div>
       </div>
-      <div class="glass text-center">
-        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F528;</div>
-        <h3 style="font-size: 16px; color: var(--green);">Build, Ship &amp; QA</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Audit code, release, test visually</p>
-        <div style="margin-top: 6px;">
-          <span class="pill pill-green">/review</span>
-          <span class="pill pill-green">/ship</span>
-          <span class="pill pill-green">/qa</span>
-          <span class="pill pill-green">/qa-only</span>
-          <span class="pill pill-green">/browse</span>
+      <div class="grid grid-2" style="gap: 16px;">
+        <div class="tool-card">
+          <span class="icon">&#x1F4CE;</span>
+          <h3>Paperclip</h3>
+          <span class="pill pill-cyan">AI Agents</span>
+          <p style="margin-top: 8px;">Agents ko kaam do, woh RAAT BHAR karte hain. Subah result.</p>
         </div>
-        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08);">
-          <p style="font-size: 11px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">STAGE Custom Agents</p>
-          <span class="pill pill-yellow">/flutter-qa</span>
-        </div>
-      </div>
-      <div class="glass text-center">
-        <div style="font-size: 32px; margin-bottom: 8px;">&#x1F4CA;</div>
-        <h3 style="font-size: 16px; color: var(--pink);">Ops &amp; Reflect</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Auth setup, retrospectives, session management</p>
-        <div style="margin-top: 6px;">
-          <span class="pill pill-accent">/setup-browser-cookies</span>
-          <span class="pill pill-accent">/retro</span>
+        <div class="tool-card">
+          <span class="icon">&#x2728;</span>
+          <h3>Skill Creator</h3>
+          <span class="pill pill-yellow">Banao Khud</span>
+          <p style="margin-top: 8px;">Apna naya skill banao, team mein share karo</p>
         </div>
       </div>
     </div>
-    <div class="glass text-center" style="margin-top: 14px; padding: 12px;">
-      <p style="font-size: 13px; color: var(--text-muted);">
-        Each skill = a different <strong style="color: #fff;">cognitive mode</strong>. Not one generic AI &mdash; nine specialist engineers thinking differently about your code.
-      </p>
-    </div>
+    <div class="slide-number">6 / 15</div>
   </div>
-  <div class="slide-number">7 / 10</div>
-  <div class="photo-credit">Photo: Growtika / Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 8: REVIEW COUNCIL ==================== -->
-<div class="slide overlay-dark" id="slide-8">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1578054041218-5ee0003926dd?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 18px;">
-      <span style="font-size: 48px;">&#x1F3DB;</span>
-      <h2>The Code Review Council</h2>
-      <p style="font-size: 16px; color: var(--text-muted);">5 AI personas review every PR in parallel &rarr; Chairman deduplicates &rarr; Judge filters noise. <strong style="color: #fff;">Runs automatically on every PR via GitHub Actions.</strong></p>
+  <!-- ==================== SLIDE 7: EVERY TEAM ==================== -->
+  <div class="slide overlay-blue" id="slide-8">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <div style="display: flex; gap: 12px; margin-bottom: 14px;">
-      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F9D3;</div>
-        <h4 style="font-size: 13px; margin-bottom: 4px;">Senior Architect</h4>
-        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Architecture, patterns, Clean Architecture layers, DI compliance</p>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <h2>Har Role Ka <span class="gradient-cyan">Apna AI Agent</span></h2>
       </div>
-      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F480;</div>
-        <h4 style="font-size: 13px; margin-bottom: 4px;">Brutal Critic</h4>
-        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Bugs, null safety, race conditions, missing error handling</p>
+      <div class="grid grid-2" style="gap: 8px;">
+        <div class="skill-row"><span class="emoji">&#x1F3AC;</span><span class="name">Content</span><span
+            class="desc">Trend tracking &mdash; subah briefing tayaar</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4F1;</span><span class="name">Social Media</span><span
+            class="desc">Auto posting &mdash; 5 platforms, ek click</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4C9;</span><span class="name">Growth / Product</span><span
+            class="desc">Funnel analysis &mdash; drop detect + reason</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4B0;</span><span class="name">Finance</span><span
+            class="desc">Expense reports &mdash; automatic, anomalies highlighted</span></div>
+        <div class="skill-row"><span class="emoji">&#x2696;&#xFE0F;</span><span class="name">Legal</span><span
+            class="desc">Compliance tracking &mdash; deadlines, risks</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4CA;</span><span class="name">Data</span><span
+            class="desc">Dashboard summary &mdash; simple language mein</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4BB;</span><span class="name">Engineering</span><span
+            class="desc">Auto bug fix &mdash; error aaya, PR ready</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F3A8;</span><span class="name">Graphic Design</span><span
+            class="desc">/stage-designer &mdash; STAGE design language mein mockup</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F4E3;</span><span class="name">Marketing</span><span
+            class="desc">Campaign copy &mdash; 5 variants, A/B testing ready</span></div>
+        <div class="skill-row"><span class="emoji">&#x1F464;</span><span class="name">HR</span><span class="desc">Resume
+            screening &mdash; top 10 shortlist with reasons</span></div>
       </div>
-      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F608;</div>
-        <h4 style="font-size: 13px; margin-bottom: 4px;">Devil's Advocate</h4>
-        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Production failure modes, stale data, app lifecycle edge cases</p>
-      </div>
-      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F512;</div>
-        <h4 style="font-size: 13px; margin-bottom: 4px;">Security Hawk</h4>
-        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">OWASP Mobile Top 10, secrets, insecure storage, auth validation</p>
-      </div>
-      <div class="glass-sm" style="flex: 1; text-align: center; padding: 14px;">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x26A1;</div>
-        <h4 style="font-size: 13px; margin-bottom: 4px;">Perf Nerd</h4>
-        <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Widget rebuilds, memory leaks, O(n&sup2;) in build, image optimization</p>
-      </div>
-    </div>
-    <div style="display: flex; gap: 12px; align-items: stretch;">
-      <div style="flex: 1; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x1F451;</div>
-        <h4 style="font-size: 14px; color: var(--yellow); margin-bottom: 4px;">Chairman</h4>
-        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Deduplicates findings, resolves severity conflicts, boosts issues flagged by 2+ personas</p>
-      </div>
-      <div style="display: flex; align-items: center; font-size: 24px; color: rgba(255,255,255,0.2);">&rarr;</div>
-      <div style="flex: 1; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x2696;</div>
-        <h4 style="font-size: 14px; color: var(--red); margin-bottom: 4px;">Judge</h4>
-        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Final quality gate. Ruthlessly filters noise, removes low-confidence findings, keeps only real issues</p>
-      </div>
-      <div style="display: flex; align-items: center; font-size: 24px; color: rgba(255,255,255,0.2);">&rarr;</div>
-      <div style="flex: 1; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 16px; text-align: center; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-        <div style="font-size: 28px; margin-bottom: 4px;">&#x2705;</div>
-        <h4 style="font-size: 14px; color: var(--green); margin-bottom: 4px;">PR Comments</h4>
-        <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">Inline comments posted to GitHub PR with severity labels: &#x1F534; HIGH &nbsp; &#x1F7E1; MEDIUM &nbsp; &#x1F7E2; LOW</p>
+      <div class="glass text-center" style="margin-top: 12px; padding: 12px; border-color: rgba(6,182,212,0.3);">
+        <p style="font-size: 16px; color: #67e8f9; font-weight: 600;">Repetitive kaam hai? Agent ka kaam hai. Tumhara
+          NAHI.</p>
       </div>
     </div>
-    <div class="glass text-center" style="margin-top: 12px; padding: 10px;">
-      <p style="font-size: 13px; color: var(--text-muted);">
-        &#x1F6E1; HIGH findings &rarr; Changes Requested &nbsp; | &nbsp; MEDIUM &rarr; Comments &nbsp; | &nbsp; Clean code &rarr; Auto-Approved
-      </p>
-    </div>
+    <div class="slide-number">7 / 15</div>
   </div>
-  <div class="slide-number">8 / 10</div>
-  <div class="photo-credit">Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 9: ALL PROJECTS ==================== -->
-<div class="slide overlay-blue" id="slide-9">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <span style="font-size: 48px;">&#x1F30D;</span>
-      <h2>Same Guards. Every Repo.</h2>
+  <!-- ==================== SLIDE 7: ALREADY SHIPPED ==================== -->
+  <div class="slide overlay-purple" id="slide-7">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1920&q=80&auto=format&fit=crop');">
     </div>
-    <div class="proj">
-      <span class="emoji">&#x1F4F1;</span>
-      <span class="name">Mobile App</span>
-      <span class="desc">GSTACK skills in CLAUDE.md + .claude/skills/gstack/</span>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <h2>Yeh Dream Nahi, <span class="gradient-text">Reality Hai</span></h2>
+        <p class="subtitle" style="font-size: 18px;">Already shipped aur LIVE</p>
+      </div>
+      <div class="grid grid-3" style="gap: 16px; margin-bottom: 16px;">
+        <div class="milestone-card">
+          <span class="icon">&#x1F50D;</span>
+          <span class="pill pill-green" style="margin-bottom: 8px; display: inline-block;">LIVE</span>
+          <h3>Automated SEO</h3>
+          <p>Google ranking improving. Search karo, STAGE upar aayega.</p>
+        </div>
+        <div class="milestone-card">
+          <span class="icon">&#x1F3A8;</span>
+          <span class="pill pill-green" style="margin-bottom: 8px; display: inline-block;">LIVE</span>
+          <h3>/stage-designer</h3>
+          <p>Live now. STAGE ki design language jaanta hai.</p>
+        </div>
+        <div class="milestone-card">
+          <span class="icon">&#x1F517;</span>
+          <span class="pill pill-green" style="margin-bottom: 8px; display: inline-block;">LIVE</span>
+          <h3>Backlink Builder</h3>
+          <p>AI KHUD backlinks bana raha hai. Google ranking har hafte improve.</p>
+        </div>
+      </div>
+      <div class="grid grid-2" style="gap: 16px;">
+        <div class="milestone-card">
+          <span class="icon">&#x1F50E;</span>
+          <span class="pill pill-green" style="margin-bottom: 8px; display: inline-block;">LIVE</span>
+          <h3>Auto Code Review</h3>
+          <p>Har PR pe AI bugs dhundta hai, security check.</p>
+        </div>
+        <div class="milestone-card">
+          <span class="icon">&#x1F527;</span>
+          <span class="pill pill-green" style="margin-bottom: 8px; display: inline-block;">LIVE</span>
+          <h3>Auto Fix</h3>
+          <p>Production error aaya? AI ne KHUD fix likh diya, PR ready.</p>
+        </div>
+      </div>
     </div>
-    <div class="proj">
-      <span class="emoji">&#x26A1;</span>
-      <span class="name">Express Backend</span>
-      <span class="desc">Express.js &mdash; where the dialect cache bombing happened</span>
-    </div>
-    <div class="proj">
-      <span class="emoji">&#x1F3D7;</span>
-      <span class="name">Nest Backend</span>
-      <span class="desc">NestJS &mdash; setup via playbook</span>
-    </div>
-    <div class="proj">
-      <span class="emoji">&#x1F310;</span>
-      <span class="name">STAGE Web App</span>
-      <span class="desc">Next.js &mdash; where the config smuggling and cache bust originated</span>
-    </div>
-    <div class="glass text-center" style="margin-top: 16px; padding: 16px;">
-      <p style="font-size: 15px; color: var(--text-muted);">
-        Every single repo gets all 9 GSTACK skills:
-        <span class="pill pill-cyan" style="font-size: 11px;">/plan-ceo-review</span>
-        <span class="pill pill-cyan" style="font-size: 11px;">/plan-eng-review</span>
-        <span class="pill pill-green" style="font-size: 11px;">/review</span>
-        <span class="pill pill-green" style="font-size: 11px;">/ship</span>
-        <span class="pill pill-green" style="font-size: 11px;">/qa</span>
-        <span class="pill pill-yellow" style="font-size: 11px;">/browse</span>
-        <span class="pill pill-accent" style="font-size: 11px;">/retro</span>
-        and more
-      </p>
-    </div>
+    <div class="slide-number">8 / 15</div>
   </div>
-  <div class="slide-number">9 / 10</div>
-  <div class="photo-credit">Photo: NASA / Unsplash</div>
-</div>
 
-<!-- ==================== SLIDE 10: HOW TO + CLOSING ==================== -->
-<div class="slide overlay-dark" id="slide-10">
-  <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1517976487492-5750f3195933?w=1920&q=80&auto=format&fit=crop');"></div>
-  <div class="bg-mesh"></div>
-  <div class="grid-bg"></div>
-  <div class="slide-inner">
-    <div class="flex" style="gap: 36px; align-items: flex-start;">
-      <div style="flex: 1;">
+  <!-- ==================== SLIDE 8: Q&A BREAK 2 ==================== -->
+  <div class="slide overlay-purple" id="slide-8">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float" style="font-size: 120px;">&#x2753;</div>
+      <h2 style="font-size: 56px;">Solutions Pe Koi Sawaal?</h2>
+      <p class="subtitle" style="font-size: 22px; margin-top: 16px;">Jo dikhaaya, uspe poochiye!</p>
+      <p style="color: rgba(255,255,255,0.3); margin-top: 32px; font-size: 16px;">Hum yahaan hain &mdash; poochiye!</p>
+    </div>
+    <div class="slide-number">9 / 15</div>
+  </div>
+
+  <!-- ==================== SLIDE 9: BUILD FEATURES ==================== -->
+  <div class="slide overlay-success" id="slide-9">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float" style="font-size: 96px;">&#x1F4AA;</div>
+      <div class="hero-title" style="font-size: 60px;">Aap Bhi Bana Sakte Ho!</div>
+      <p class="subtitle" style="max-width: 800px; margin: 0 auto; font-size: 20px; line-height: 1.7;">
+        PM ho? Feature bana do. Designer ho? Screen implement karo.<br>Marketing ho? Landing page bana do.
+      </p>
+      <div style="display: flex; gap: 14px; justify-content: center; margin-top: 24px; flex-wrap: wrap;">
+        <span class="pill pill-green" style="font-size: 14px; padding: 6px 16px;">&#x1F4CB; PM</span>
+        <span class="pill pill-pink" style="font-size: 14px; padding: 6px 16px;">&#x1F3A8; Designer</span>
+        <span class="pill pill-orange" style="font-size: 14px; padding: 6px 16px;">&#x1F4E3; Marketing</span>
+        <span class="pill pill-cyan" style="font-size: 14px; padding: 6px 16px;">&#x2728; Anyone</span>
+      </div>
+      <div class="glass" style="max-width: 600px; margin: 28px auto 0; border-color: rgba(16,185,129,0.3);">
+        <p style="font-size: 18px; color: #6ee7b7; font-weight: 600;">AI native = kisi bhi role se feature ship ho sakta
+          hai</p>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">GitHub access chahiye? Humse maango
+          &mdash; hum de denge.</p>
+      </div>
+    </div>
+    <div class="slide-number">10 / 15</div>
+  </div>
+
+  <!-- ==================== SLIDE 10: SETUP — FULL DETAILS ==================== -->
+  <div class="slide overlay-dark" id="slide-10">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1517976487492-5750f3195933?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 16px;">
         <span style="font-size: 40px;">&#x1F3AC;</span>
-        <h2 style="font-size: 36px;">Get Started Now</h2>
-        <div class="terminal" style="margin-bottom: 16px;">
-          <span class="comment"># 1. Clone the playbook</span><br>
-          <span class="prompt">$</span> git clone stage-playbook<br>
-          <span class="prompt">$</span> cd stage-playbook<br><br>
-          <span class="comment"># 2. Run setup &mdash; pick your projects</span><br>
-          <span class="prompt">$</span> ./setup.sh<br><br>
-          <span class="highlight">[A]</span> All Projects<br>
-          <span class="highlight">[1]</span> Mobile App<br>
-          <span class="highlight">[2]</span> Express Backend<br>
-          <span class="highlight">[3]</span> Nest Backend<br>
-          <span class="highlight">[4]</span> STAGE Web App<br><br>
-          <span class="success">&#x2713; JDK 17 installed</span><br>
-          <span class="success">&#x2713; Android Studio configured</span><br>
-          <span class="success">&#x2713; Claude Code + GSTACK ready</span><br><br>
-          <span class="comment"># 3. Start using skills immediately</span><br>
-          <span class="prompt">$</span> /review &nbsp; /qa &nbsp; /ship
+        <h2 style="font-size: 40px;">Setup Kaise Hoga?</h2>
+      </div>
+      <div class="flex" style="gap: 28px; align-items: flex-start;">
+        <!-- Left: Terminal -->
+        <div style="flex: 1;">
+          <!-- Step by step guide for non-tech -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(6,182,212,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(6,182,212,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">1</span>
+              <div>
+                <h3 style="font-size: 15px; color: #67e8f9; margin-bottom: 4px;">Slack se Zip Download Karo</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Humne Slack pe ek file share ki hai. Usse download
+                  karo.</p>
+              </div>
+            </div>
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(6,182,212,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(6,182,212,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">2</span>
+              <div>
+                <h3 style="font-size: 15px; color: #67e8f9; margin-bottom: 4px;">Double-Click se Unzip Karo</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">Zip file pe double-click karo. Ek folder ban
+                  jayega.</p>
+              </div>
+            </div>
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(249,115,22,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(249,115,22,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">3</span>
+              <div>
+                <h3 style="font-size: 15px; color: #fdba74; margin-bottom: 4px;">Folder pe Right Click &rarr; Terminal
+                  Kholo</h3>
+                <p style="font-size: 13px; color: var(--text-muted);">
+                  Us folder pe <strong style="color: #fff;">right click</strong> karo.<br>
+                  <strong style="color: #fff;">"New Terminal at Folder"</strong> pe click karo.<br>
+                  <span style="font-size: 11px; color: rgba(255,255,255,0.4);">Nahi dikh raha? Right click &rarr;
+                    Services &rarr; "New Terminal at Folder"</span>
+                </p>
+              </div>
+            </div>
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(16,185,129,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(16,185,129,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">4</span>
+              <div>
+                <h3 style="font-size: 15px; color: #6ee7b7; margin-bottom: 4px;">Terminal Mein Type Karo:</h3>
+                <div
+                  style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 8px 12px; margin-top: 4px; font-family: monospace;">
+                  <span style="color: #6ee7b7;">$</span> <span style="color: #fff;">sh setup.sh</span>
+                </div>
+              </div>
+            </div>
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(99,102,241,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(99,102,241,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">5</span>
+              <div>
+                <h3 style="font-size: 15px; color: #a5b4fc; margin-bottom: 4px;">Ek Menu Dikhega &mdash; 2 Types Hain
+                </h3>
+                <div style="display: flex; gap: 8px; margin-top: 6px;">
+                  <div
+                    style="flex: 1; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: 8px; padding: 8px;">
+                    <p style="font-size: 12px; color: #6ee7b7; font-weight: 700;">&#x2728; AI Only (Option 8)</p>
+                    <p style="font-size: 11px; color: var(--text-muted);">SABKE LIYE &mdash; AI tools chahiye</p>
+                  </div>
+                  <div
+                    style="flex: 1; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.25); border-radius: 8px; padding: 8px;">
+                    <p style="font-size: 12px; color: #a5b4fc; font-weight: 700;">&#x1F4BB; Developer (Options 1-7)</p>
+                    <p style="font-size: 11px; color: var(--text-muted);">Code karna hai STAGE pe</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="glass-sm"
+              style="display: flex; align-items: flex-start; gap: 12px; border-color: rgba(245,158,11,0.3);">
+              <span
+                style="font-size: 28px; flex-shrink: 0; background: rgba(245,158,11,0.2); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">6</span>
+              <div>
+                <h3 style="font-size: 15px; color: #fcd34d; margin-bottom: 4px;"><span style="font-size: 20px;">8</span>
+                  Dabao &rarr; Enter &rarr; 5 Min Wait &rarr; DONE!</h3>
+                <p style="font-size: 13px; color: var(--text-muted);"><strong style="color: #6ee7b7;">SAB AUTOMATIC
+                    install ho jayega!</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: 2 Types + What's installed -->
+        <div style="flex: 0 0 380px;">
+          <div class="glass" style="padding: 16px; margin-bottom: 12px; border-color: rgba(16,185,129,0.3);">
+            <h3 style="color: var(--green); font-size: 16px; margin-bottom: 8px;">&#x2728; Type 1: AI Only Setup</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              <strong style="color: #fff;">SABKE LIYE</strong> &mdash; 8 dabao, 5 min, done.<br>
+              Claude + Gstack + Paperclip + 18 Skills + Security + Design System
+            </p>
+          </div>
+          <div class="glass" style="padding: 16px; margin-bottom: 12px; border-color: rgba(99,102,241,0.3);">
+            <h3 style="color: var(--accent); font-size: 16px; margin-bottom: 8px;">&#x1F4BB; Type 2: Dev Setup</h3>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              <strong style="color: #fff;">Code karna hai STAGE pe?</strong><br>
+              Options 1-7 se project pick karo.<br>
+              Mobile, Backend, Webapp, TV apps &mdash; sab install ho jayega.
+            </p>
+            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);">
+              <p style="font-size: 11px; color: rgba(255,255,255,0.4);">&#x1F449; Isme interest hai? Session ke baad
+                humse connect karo. Hum setup kar denge.</p>
+            </div>
+          </div>
+          <div class="glass" style="padding: 14px;">
+            <h3 style="font-size: 14px; color: var(--yellow); margin-bottom: 8px;">&#x1F4E6; Yeh sab install hoga:</h3>
+            <div style="font-size: 12px; color: var(--text-muted); line-height: 1.8;">
+              &#x2705; Claude Code (AI assistant)<br>
+              &#x2705; Gstack (25+ professional skills)<br>
+              &#x2705; Paperclip (AI agent manager)<br>
+              &#x2705; /stage-designer (STAGE design system)<br>
+              &#x2705; 18 Skill Packs (Marketing, PDF, PPTX, PM, UI/UX...)<br>
+              &#x2705; Security &amp; Safety rules<br>
+              &#x2705; Skill Creator (apna skill banao)
+            </div>
+          </div>
         </div>
       </div>
-      <div style="flex: 0 0 380px;">
-        <div class="grid grid-3" style="margin-bottom: 16px;">
-          <div class="stat-card">
-            <div class="num gradient-green">5+2</div>
-            <div class="label">Review Council</div>
-          </div>
-          <div class="stat-card">
-            <div class="num gradient-text">4</div>
-            <div class="label">Repos Integrated</div>
-          </div>
-          <div class="stat-card">
-            <div class="num" style="color: var(--cyan);">9</div>
-            <div class="label">GSTACK Skills</div>
-          </div>
-        </div>
-        <div class="glass" style="border-color: rgba(16, 185, 129, 0.25); padding: 18px; text-align: center; margin-bottom: 16px;">
-          <div style="font-size: 48px; margin-bottom: 8px;">&#x1F3AF;</div>
-          <div style="font-size: 40px; font-weight: 900; color: var(--green);">ZERO</div>
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
-            Zero 18K CSVs. Zero cache busts.<br>
-            Zero config smuggling. Zero ghost PRs.<br>
-            Zero wrong JDK installs.
+    </div>
+    <div class="slide-number">11 / 15</div>
+  </div>
+
+  <!-- ==================== SLIDE 12: PAPERCLIP — WHAT IT IS ==================== -->
+  <div class="slide overlay-orange" id="slide-12">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1578054041218-5ee0003926dd?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span class="big-emoji" style="font-size: 56px;">&#x1F4CE;</span>
+        <h2>Paperclip &mdash; <span class="gradient-orange">Tumhara 24/7 AI Workforce</span></h2>
+        <p class="subtitle" style="font-size: 18px;">AI agents ka office manager. Tum bolo kya karna hai, agents RAAT
+          BHAR kaam karein.</p>
+      </div>
+      <div class="grid grid-3" style="gap: 16px;">
+        <div class="glass" style="padding: 20px; border-color: rgba(249,115,22,0.3);">
+          <h3 style="font-size: 16px; color: var(--orange); margin-bottom: 12px;">&#x1F4CE; Kya hai?</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.7;">
+            Ek <strong style="color: #fff;">office manager</strong> jo AI agents ko kaam deta hai. Ek agent trends track
+            karta hai, ek comments padhta hai, ek posts banata hai &mdash; sab <strong style="color: #fff;">EK
+              SAATH</strong>. Browser mein dashboard khulta hai jismein sab dikhta hai.
           </p>
         </div>
-        <div class="quote-box">
-          <p style="font-size: 15px;">"Boil the Lake" &mdash; AI makes completeness affordable. Don't cut scope; cover everything.</p>
+        <div class="glass" style="padding: 20px; border-color: rgba(249,115,22,0.3);">
+          <h3 style="font-size: 16px; color: var(--orange); margin-bottom: 12px;">&#x2699; Kaise kaam karta hai?</h3>
+          <div style="font-size: 14px; color: var(--text-muted); line-height: 2.2;">
+            <strong style="color: #fff;">1.</strong> Company banao (jaise "SEO")<br>
+            <strong style="color: #fff;">2.</strong> Agent banao (jaise "CEO")<br>
+            <strong style="color: #fff;">3.</strong> Task do (jaise "hiring plan banao")<br>
+            <strong style="color: #fff;">4.</strong> Agent KHUD kaam kare, result dashboard mein
+          </div>
+        </div>
+        <div class="glass" style="padding: 20px; border-color: rgba(249,115,22,0.3);">
+          <h3 style="font-size: 16px; color: var(--orange); margin-bottom: 12px;">&#x1F4A1; Tumhare liye kya?</h3>
+          <div style="font-size: 13px; color: var(--text-muted); line-height: 1.9;">
+            &#x2705; Trends track &mdash; daily, automatic<br>
+            &#x2705; Comments analyze &mdash; sorted demands<br>
+            &#x2705; Reports &mdash; daily/weekly/monthly<br>
+            &#x2705; Content &mdash; 5 platforms, ek click<br>
+            &#x2705; Funnel monitor &mdash; drop + reason<br>
+            &#x2705; SEO &mdash; backlinks + pages auto<br>
+            &#x2705; Koi bhi repetitive task &mdash; automate
+          </div>
         </div>
       </div>
+      <div class="glass text-center" style="margin-top: 14px; padding: 12px; border-color: rgba(16,185,129,0.3);">
+        <p style="font-size: 15px; color: #6ee7b7; font-weight: 600;">&#x2705; Playbook install karo = Paperclip bhi
+          ready. Ab dekhte hain LIVE demo &rarr;</p>
+      </div>
     </div>
+    <div class="slide-number">12 / 15</div>
   </div>
-  <div class="slide-number">10 / 10</div>
-  <div class="photo-credit">Photo: SpaceX / Unsplash</div>
-</div>
 
-<script>
-  // Local pre-generated MP3 files — no API calls needed
-  const slideAudioFiles = [
-    'audio/slide-01.mp3',
-    'audio/slide-02.mp3',
-    'audio/slide-03.mp3',
-    'audio/slide-04.mp3',
-    'audio/slide-05.mp3',
-    'audio/slide-06.mp3',
-    'audio/slide-07.mp3',
-    'audio/slide-08.mp3',
-    'audio/slide-09.mp3',
-    'audio/slide-10.mp3'
-  ];
+  <!-- ==================== SLIDE 13: PAPERCLIP LIVE DEMO VIDEO ==================== -->
+  <div class="slide overlay-dark" id="slide-13">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div style="margin-bottom: 10px;">
+        <h2 style="font-size: 36px;">&#x1F3AC; Live Demo &mdash; <span class="gradient-orange">Setup se Paperclip
+            Tak</span></h2>
+      </div>
+      <div style="max-width: 960px; margin: 0 auto;">
+        <video id="demo-video" src="demo.mp4" controls
+          style="width: 100%; border-radius: 12px; border: 2px solid rgba(249,115,22,0.3);" playsinline></video>
+      </div>
+    </div>
+    <div class="slide-number">13 / 15</div>
+  </div>
 
-  let currentAudio = null;
-  let isSpeaking = false;
+  <!-- ==================== SLIDE 14: Q&A FINAL ==================== -->
+  <div class="slide overlay-purple" id="slide-13">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float" style="font-size: 120px;">&#x2753;</div>
+      <h2 style="font-size: 56px;">Final Questions?</h2>
+      <p class="subtitle" style="font-size: 22px; margin-top: 16px;">Kuch bhi poochna hai? Abhi poochiye!</p>
+      <p style="color: rgba(255,255,255,0.3); margin-top: 32px; font-size: 16px;">Hum yahaan hain &mdash; poochiye!</p>
+    </div>
+    <div class="slide-number">14 / 15</div>
+  </div>
 
-  function stopAllAudio() {
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-      currentAudio.onended = null;
-      currentAudio = null;
+  <!-- ==================== SLIDE 14: CLOSING ==================== -->
+  <div class="slide overlay-dark" id="slide-14">
+    <div class="slide-bg"
+      style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80&auto=format&fit=crop');">
+    </div>
+    <div class="bg-mesh"></div>
+    <div class="grid-bg"></div>
+    <div class="slide-inner text-center">
+      <div class="big-emoji float" style="font-size: 96px;">&#x1F680;</div>
+      <div class="hero-title" style="font-size: 72px;">UPGRADE Karte Hain!</div>
+      <div class="grid grid-4" style="gap: 16px; max-width: 800px; margin: 28px auto;">
+        <div class="stat-card">
+          <div class="num gradient-text">50+</div>
+          <div class="label">Skills</div>
+        </div>
+        <div class="stat-card">
+          <div class="num gradient-green">Every</div>
+          <div class="label">Team covered</div>
+        </div>
+        <div class="stat-card">
+          <div class="num gradient-cyan">24/7</div>
+          <div class="label">AI Agents</div>
+        </div>
+        <div class="stat-card">
+          <div class="num gradient-red">Safe</div>
+          <div class="label">By default</div>
+        </div>
+      </div>
+      <p style="font-size: 22px; color: var(--text-muted); margin-top: 24px; line-height: 1.6;">
+        <strong style="color: #fff;">STAGE</strong> &mdash; AI native since day one.
+      </p>
+      <p style="color: rgba(255,255,255,0.3); margin-top: 20px; font-size: 14px;">April 2026</p>
+    </div>
+    <div class="slide-number">15 / 15</div>
+  </div>
+
+  <script>
+    var slides = document.querySelectorAll('.slide');
+    var progress = document.getElementById('progress');
+    var total = slides.length;
+    var current = 0;
+
+    // Audio for 14 slides — Q&A slides (4, 8, 13) = null
+    var slideAudio = [
+      'audio/slide-01.mp3',  // 1: Hero — Baburao
+      'audio/slide-02.mp3',  // 2: Jargon — Netflix, Flipkart
+      'audio/slide-03.mp3',  // 3: Incidents — Gabbar, Munna, Sholay
+      'audio/slide-04.mp3',  // 4: Why — Bullet train vs bailgaadi
+      null,                  // 5: Q&A 1 — "Koi shaq?"
+      'audio/slide-06.mp3',  // 6: What You Get — Avengers, Thanos
+      'audio/slide-07.mp3',  // 7: Every Team — 3 Idiots, Dhoom
+      'audio/slide-08.mp3',  // 8: Already Shipped — Rajinikanth
+      null,                  // 9: Q&A 2 — "Samosa khao"
+      'audio/slide-10.mp3',  // 10: Build Features — Dangal
+      'audio/slide-11.mp3',  // 11: Setup — CRED analogy
+      'audio/slide-12.mp3',  // 12: Paperclip — Don Corleone
+      null,                  // 13: Video Demo (voiceover IN video)
+      null,                  // 14: Q&A Final — KBC
+      'audio/slide-15.mp3'   // 15: Closing — Gabbar callback
+    ];
+
+    var qaSlides = [4, 8, 13]; // 0-indexed: slides 5, 9, 14
+    var currentAudio = null;
+    var isAutoPlaying = false;
+    var isPaused = false;
+
+    function showSlide(n, autoAdvance) {
+      if (n < 0 || n >= total) return;
+      // Pause video if leaving video slide
+      var demoVideo = document.getElementById('demo-video');
+      if (demoVideo) demoVideo.pause();
+
+      slides[current].classList.remove('active');
+      current = n;
+      slides[current].classList.add('active');
+      progress.style.width = ((current + 1) / total * 100) + '%';
+
+      // Auto-play video WITH sound on video slide (index 12 = slide 13)
+      if (current === 12 && demoVideo) {
+        demoVideo.currentTime = 0;
+        demoVideo.muted = false;
+        demoVideo.play().catch(function () { });
+      }
+
+      if (autoAdvance && isAutoPlaying) {
+        if (qaSlides.indexOf(current) !== -1) {
+          isPaused = true;
+          updateControls();
+          return;
+        }
+        playSlideAudio(current, true);
+      }
+      updateControls();
     }
-    isSpeaking = false;
-    updateSpeakerIcon();
-  }
 
-  function speakSlide(slideIndex) {
-    stopAllAudio();
-
-    const src = slideAudioFiles[slideIndex];
-    if (!src) return;
-
-    const audio = new Audio(src);
-    currentAudio = audio;
-    isSpeaking = true;
-    updateSpeakerIcon();
-
-    audio.onended = () => {
-      isSpeaking = false;
-      currentAudio = null;
-      updateSpeakerIcon();
-    };
-
-    audio.onerror = () => {
-      console.error('Audio load error for:', src);
-      isSpeaking = false;
-      currentAudio = null;
-      updateSpeakerIcon();
-    };
-
-    audio.play();
-  }
-
-  function toggleSpeech() {
-    if (isSpeaking) {
-      stopAllAudio();
-    } else {
-      speakSlide(current);
+    function playSlideAudio(idx, autoNext) {
+      stopAudio();
+      var src = slideAudio[idx];
+      if (!src) {
+        if (autoNext && isAutoPlaying) {
+          setTimeout(function () { showSlide(current + 1, true); }, 500);
+        }
+        return;
+      }
+      currentAudio = new Audio(src);
+      currentAudio.play().catch(function () { });
+      if (autoNext) {
+        currentAudio.onended = function () {
+          if (isAutoPlaying && !isPaused) {
+            showSlide(current + 1, true);
+          }
+        };
+      }
+      updateControls();
     }
-  }
 
-  function updateSpeakerIcon() {
-    const btn = document.getElementById('speaker-btn');
-    if (btn) {
-      btn.textContent = isSpeaking ? '🔊' : '🔈';
-      btn.title = isSpeaking ? 'Stop narration (S)' : 'Play narration (S)';
+    function stopAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
     }
-  }
 
-  let current = 0;
-  const slides = document.querySelectorAll('.slide');
-  const progress = document.getElementById('progress');
-  const total = slides.length;
-
-  function showSlide(n) {
-    slides[current].classList.remove('active');
-    current = ((n % total) + total) % total;
-    slides[current].classList.add('active');
-    progress.style.width = ((current + 1) / total * 100) + '%';
-
-    // Auto-speak on slide change
-    speakSlide(current);
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
-      e.preventDefault();
-      showSlide(current + 1);
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      showSlide(current - 1);
-    } else if (e.key === 'Home') {
-      showSlide(0);
-    } else if (e.key === 'End') {
-      showSlide(total - 1);
-    } else if (e.key === 's' || e.key === 'S') {
-      toggleSpeech();
+    function startAutoPlay() {
+      isAutoPlaying = true;
+      isPaused = false;
+      if (qaSlides.indexOf(current) !== -1) {
+        showSlide(current + 1, true);
+      } else {
+        playSlideAudio(current, true);
+      }
+      updateControls();
     }
-  });
 
-  let touchStartX = 0;
-  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-  document.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) showSlide(current + (diff > 0 ? 1 : -1));
-  });
+    function togglePause() {
+      if (!isAutoPlaying) return;
+      isPaused = !isPaused;
+      if (isPaused) {
+        if (currentAudio) currentAudio.pause();
+      } else {
+        if (qaSlides.indexOf(current) !== -1) {
+          showSlide(current + 1, true);
+        } else if (currentAudio) {
+          currentAudio.play().catch(function () { });
+        } else {
+          playSlideAudio(current, true);
+        }
+      }
+      updateControls();
+    }
 
-  document.addEventListener('click', (e) => {
-    if (e.target.id === 'speaker-btn') return;
-    if (e.clientX > window.innerWidth / 2) showSlide(current + 1);
-    else showSlide(current - 1);
-  });
+    function stopPresentation() {
+      isAutoPlaying = false;
+      isPaused = false;
+      stopAudio();
+      updateControls();
+    }
 
-  // Don't auto-speak on initial load, wait for first interaction
-  slides[0].classList.add('active');
-  progress.style.width = (1 / total * 100) + '%';
-</script>
+    function updateControls() {
+      var playBtn = document.getElementById('play-btn');
+      var pauseBtn = document.getElementById('pause-btn');
+      var stopBtn = document.getElementById('stop-btn');
+      var status = document.getElementById('status-text');
 
-<!-- Speaker toggle button -->
-<div id="speaker-btn" onclick="toggleSpeech()" style="
+      if (isAutoPlaying && !isPaused) {
+        playBtn.style.display = 'none';
+        pauseBtn.style.display = 'flex';
+        stopBtn.style.display = 'flex';
+        if (qaSlides.indexOf(current) !== -1 && isPaused) {
+          status.innerHTML = 'Q&A &mdash; Press &#x25B6; to continue';
+          status.style.color = '#c4b5fd';
+        } else {
+          status.textContent = 'Playing slide ' + (current + 1) + ' / ' + total;
+          status.style.color = '#6ee7b7';
+        }
+      } else if (isAutoPlaying && isPaused) {
+        playBtn.style.display = 'flex';
+        pauseBtn.style.display = 'none';
+        stopBtn.style.display = 'flex';
+        if (qaSlides.indexOf(current) !== -1) {
+          status.innerHTML = 'Q&A &mdash; Press &#x25B6; to continue after questions';
+          status.style.color = '#c4b5fd';
+        } else {
+          status.textContent = 'Paused at slide ' + (current + 1) + ' / ' + total;
+          status.style.color = '#fcd34d';
+        }
+      } else {
+        playBtn.style.display = 'flex';
+        pauseBtn.style.display = 'none';
+        stopBtn.style.display = 'none';
+        status.innerHTML = 'Press &#x25B6; to start';
+        status.style.color = 'rgba(255,255,255,0.4)';
+      }
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'p' || e.key === 'P') {
+        if (!isAutoPlaying) startAutoPlay();
+        else togglePause();
+        return;
+      }
+      if (e.key === 'Escape') {
+        stopPresentation();
+        return;
+      }
+      if (e.key === 's' || e.key === 'S') {
+        playSlideAudio(current, false);
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        stopAudio();
+        isAutoPlaying = false;
+        showSlide(current + 1, false);
+        updateControls();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        stopAudio();
+        isAutoPlaying = false;
+        showSlide(current - 1, false);
+        updateControls();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        if (!isAutoPlaying) startAutoPlay();
+        else togglePause();
+      } else if (e.key === 'Home') {
+        stopPresentation();
+        showSlide(0, false);
+      } else if (e.key === 'End') {
+        stopPresentation();
+        showSlide(total - 1, false);
+      }
+    });
+
+    // Touch support
+    var touchStartX = 0;
+    document.addEventListener('touchstart', function (e) { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', function (e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        stopAudio();
+        isAutoPlaying = false;
+        showSlide(current + (diff > 0 ? 1 : -1), false);
+        updateControls();
+      }
+    });
+
+    // Init
+    slides[0].classList.add('active');
+    progress.style.width = (1 / total * 100) + '%';
+    updateControls();
+  </script>
+
+  <!-- Control bar -->
+  <div style="
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  cursor: pointer;
+  gap: 8px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 40px;
+  padding: 8px 20px;
   z-index: 100;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: background 0.2s;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   user-select: none;
-" title="Play narration (S)">🔈</div>
+">
+    <div id="play-btn" onclick="event.stopPropagation(); if(!isAutoPlaying) startAutoPlay(); else togglePause();" style="
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(16,185,129,0.3); border: 1px solid rgba(16,185,129,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; transition: background 0.2s;
+  " title="Play (P or Space)">&#x25B6;</div>
+    <div id="pause-btn" onclick="event.stopPropagation(); togglePause();" style="
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(245,158,11,0.3); border: 1px solid rgba(245,158,11,0.5);
+    display: none; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; transition: background 0.2s;
+  " title="Pause (P or Space)">&#x23F8;</div>
+    <div id="stop-btn" onclick="event.stopPropagation(); stopPresentation();" style="
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(239,68,68,0.3); border: 1px solid rgba(239,68,68,0.5);
+    display: none; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer; transition: background 0.2s;
+  " title="Stop (Esc)">&#x23F9;</div>
+    <div id="status-text" style="font-size: 12px; color: rgba(255,255,255,0.4); min-width: 140px; text-align: center;">
+      Press &#x25B6; to start</div>
+    <div
+      style="font-size: 10px; color: rgba(255,255,255,0.2); border-left: 1px solid rgba(255,255,255,0.1); padding-left: 10px; line-height: 1.4;">
+      Space: play/pause<br>
+      &#x2190;&#x2192;: manual nav<br>
+      S: replay slide audio
+    </div>
+  </div>
+
 </body>
+
 </html>

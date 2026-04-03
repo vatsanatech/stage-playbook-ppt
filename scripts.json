@@ -1,0 +1,54 @@
+[
+  {
+    "slide": 1,
+    "text": "Namaste everyone! <break time=\"0.5s\"/> Aaj hum baat karenge ek aisi cheez ki jo aapki POORI team ki productivity badal degi. <break time=\"0.3s\"/> STAGE AI Playbook. <break time=\"0.5s\"/> Ek command... aur aapke saare AI tools ready. Chahe aap code likhte ho, design karte ho, marketing karte ho, ya content banate ho... yeh sabke liye hai."
+  },
+  {
+    "slide": 2,
+    "text": "Lekin pehle... yeh samjho ki humein yeh KYUN chahiye? <break time=\"0.5s\"/> Abhi kya hota hai? <break time=\"0.3s\"/> Naya banda aata hai... ghanton laga deta hai tools install karne mein. Slack pe poochta hai... Rahul se poochta hai... Divya se poochta hai. Sab alag alag setup use kar rahe hain! <break time=\"0.3s\"/> Aur sabse BADA problem? AI bina rules ke kaam kar raha hai. Passwords leak ho sakte hain. Live app TOOT sakti hai. Aur kisiko pata bhi nahi chalta! <break time=\"0.5s\"/> Yeh sab fix hota hai... ek playbook se."
+  },
+  {
+    "slide": 3,
+    "text": "Ab yahan do raaste hain. <break time=\"0.5s\"/> Pehla raasta... AI Only Setup. Yeh hai SABKE liye. PMs, designers, marketers, content writers... koi bhi. Bas option 8 dabao aur 5 minute mein sab ready. <break time=\"0.5s\"/> Doosra raasta... Full Dev Setup. Yeh developers ke liye hai jo STAGE ke repos pe kaam karte hain. Mobile app, backend, website, TV apps... sab kuch. <break time=\"0.3s\"/> Dono mein ek hi command hai. Bas choice alag hai."
+  },
+  {
+    "slide": 4,
+    "text": "Toh shuru kaise karein? Bahut simple hai! <break time=\"0.3s\"/> Terminal kholo. Teen lines paste karo. BAS! <break time=\"0.5s\"/> Ek menu dikhega... agar aap developer NAHI ho, toh bas 8 dabao aur enter maaro. <break time=\"0.3s\"/> Claude Code install hoga, Gstack install hoga, Paperclip install hoga, 18 skill packs install honge, security rules set hongi, design system lag jayega. <break time=\"0.3s\"/> SAB automatic. Koi sawaal nahi poochega. Bas 5 minute wait karo aur done!"
+  },
+  {
+    "slide": 5,
+    "text": "Ab samjhte hain ki yeh tools KARTE kya hain. <break time=\"0.5s\"/> Pehla tool hai Claude Code. <break time=\"0.3s\"/> Isko aise samjho... jaise ek senior developer 24 ghante aapke bagal mein baitha ho. <break time=\"0.5s\"/> Aapko code likhna nahi aata? Koi baat nahi! Bas plain Hindi ya English mein bolo... bhai yeh button green kardo... aur Claude kar dega. <break time=\"0.3s\"/> Files kholega, changes karega, test karega... sab khud. <break time=\"0.5s\"/> Aur SABSE important baat... humara playbook Claude ko sikhata hai ki STAGE mein kya safe hai aur kya nahi. Toh aap bina tension ke kaam kar sakte ho."
+  },
+  {
+    "slide": 6,
+    "text": "Doosra tool hai Gstack. <break time=\"0.3s\"/> Yeh Claude ko SUPERPOWERS deta hai! <break time=\"0.5s\"/> 30 se zyada skills hain. Jaise... slash plan CEO review likhoge toh Claude CEO ki tarah sochega. Slash QA likhoge toh website test karega. Slash ship likhoge toh code production mein bhej dega. <break time=\"0.3s\"/> Security audit? Hai. Design review? Hai. Weekly retrospective? Hai. <break time=\"0.5s\"/> Isko aise samjho... har slash command Claude ka DIMAG badal deta hai. Ek generic AI nahi... har kaam ke liye alag specialist!"
+  },
+  {
+    "slide": 7,
+    "text": "Teesra aur SABSE exciting tool hai Paperclip! <break time=\"0.5s\"/> Paperclip ek office manager hai... lekin AI agents ka. <break time=\"0.3s\"/> Aap bolo ki kya karna hai... aur Paperclip multiple AI agents ko coordinate karta hai. Ek agent code likhta hai, ek test karta hai, ek documentation likhta hai... sab EKTAATH! <break time=\"0.5s\"/> Aur iska ek BEAUTIFUL dashboard hai jo aapke browser mein khulta hai. Setup ke baad AUTOMATIC khul jaata hai. <break time=\"0.3s\"/> Koi tech setup nahi. Koi database nahi. Bas install karo aur chalu!"
+  },
+  {
+    "slide": 8,
+    "text": "Ab main aapko dikhata hoon ki Paperclip STAGE mein KAISE kaam karega. Yeh real use cases hain! <break time=\"0.5s\"/> PEHLA... Trend Watcher Agent! Har subah 9 baje, yeh agent KHUD YouTube trending check karta hai. Haryanvi, Rajasthani, Bhojpuri... sab. Twitter aur Instagram hashtags scan karta hai. Aur Stage ki library se compare karta hai. <break time=\"0.3s\"/> Subah aapka content manager chai peete peete yeh padta hai... Agent ne RAAT BHAR kaam kiya! <break time=\"0.5s\"/> DOOSRA... Comment Intelligence Agent! App reviews aur YouTube comments se patterns dhundta hai. 47 logon ne bola Gujarati comedy chahiye. 31 ne bola Rajasthani web series. Agent ne ek lakh users ki SURVEY bana di... pehle yeh kaam HOTA HI NAHI THA! <break time=\"0.5s\"/> TEESRA... Posting Calendar Agent! Naya show upload hua? Agent KHUD 5 platforms ke liye alag alag posts banata hai. Instagram mein fun tone. Twitter mein punchy. Manager bas APPROVE karta hai. <break time=\"0.3s\"/> Ek click pe 5 platforms ready! <break time=\"0.5s\"/> Aur SABSE POWERFUL... Viral Moment Agent! Stage ka show Twitter pe viral ho raha hai? Agent DUS MINUTE mein detect karta hai. Meme suggest karta hai. Draft post banata hai. Aapke paas aata hai... YEH VIRAL HO RAHA HAI, approve karo! <break time=\"0.3s\"/> Dus minute versus pehle 2 se 3 ghante! <break time=\"0.5s\"/> Yaad rakhiye... tumhare team member ko CREATIVE kaam karna chahiye. Repetitive kaam AGENT karega."
+  },
+  {
+    "slide": 9,
+    "text": "Ab aapke paas 18 extra skill packs bhi install hote hain! <break time=\"0.3s\"/> Flutter ke 49 skills, Firebase, Next.js, React, Stripe payments, design skills, marketing skills, product management, PDF banao, presentations banao... <break time=\"0.3s\"/> SAB AUTOMATIC install hota hai parallel mein. Bas 2 minute lagta hai. <break time=\"0.5s\"/> Aapko kuch karna nahi hai. Setup script sab sambhalta hai."
+  },
+  {
+    "slide": 10,
+    "text": "Aur yeh SABSE important slide hai. Safety! <break time=\"0.5s\"/> Bina playbook ke... Claude kya kar sakta hai? Live app mein seedha changes push kar sakta hai. Passwords public kar sakta hai. Bina test kiye bol sakta hai... ho gaya! Aur dusron ka code tod sakta hai. <break time=\"0.5s\"/> LEKIN playbook install hone ke baad? Claude HAMESHA alag branch banata hai. Passwords KABHI leak nahi karta. Test ZAROOR chalaata hai. Aur existing code pehle PADHTA hai phir change karta hai. <break time=\"0.5s\"/> Aur SABSE achi baat? Yeh rules aapko yaad rakhne ki zaroorat NAHI. Playbook install hua... rules AUTOMATIC lag gayi. Invisible protection!"
+  },
+  {
+    "slide": 11,
+    "text": "Developers ke liye... yahan AATH projects hain jo ek menu se setup hote hain. <break time=\"0.3s\"/> Mobile app, dono backends, website, Backstage developer portal, Samsung LG TV app, Android TV app... aur haan, AI Only Setup bhi yahi se hota hai. <break time=\"0.3s\"/> Jo chahiye wo choose karo. Script sab install kar degi."
+  },
+  {
+    "slide": 12,
+    "text": "Toh setup ke BAAD aapke paas kya hoga? <break time=\"0.5s\"/> 3 powerful AI tools. 30 se zyada Gstack skills. 18 skill packs. Security rules jo AUTOMATICALLY kaam karti hain. Design system jo STAGE brand follow karta hai. <break time=\"0.5s\"/> Aur aage kya karna hai? Simple! Koi bhi project folder kholo. Terminal mein claude likho. Plain language mein baat karo. Aur slash type karo superpowers ke liye. <break time=\"0.3s\"/> Paperclip dashboard bhi browser mein khud khul jaata hai."
+  },
+  {
+    "slide": 13,
+    "text": "Toh bas TEEN LINES hain aapke aur AI superpowers ke beech mein! <break time=\"0.5s\"/> Git clone, cd, aur setup dot sh. <break time=\"0.3s\"/> Non-developer ho? 8 dabao. Developer ho? Apne projects choose karo. <break time=\"0.5s\"/> 5 minute mein AI Only Setup. 15 minute mein full dev setup. Aur tech knowledge? ZERO chahiye! <break time=\"0.5s\"/> STAGE... AI native since day one. <break time=\"0.3s\"/> Toh chalo... SHURU KARTE HAIN! Dhanyawaad!"
+  }
+]
